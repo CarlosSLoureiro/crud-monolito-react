@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  database:
+    image: mysql
+    container_name: mysql-server
+    platform: linux/amd64
+    environment:
+      MYSQL_DATABASE: app
+      MYSQL_ROOT_PASSWORD: 9030
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app-network
+    ports:
+      - 3306:3306
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: database
+      MYSQL_ROOT_PASSWORD: 9030
+    ports:
+      - 8080:80
+    depends_on:
+      - database
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
