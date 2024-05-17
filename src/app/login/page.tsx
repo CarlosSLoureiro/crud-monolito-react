@@ -1,11 +1,15 @@
-'use client'
+"use client";
 
-import * as React from 'react';
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
+import * as React from "react";
 
 export default function ButtonUsage() {
   const onClick = () => {
-    document.title = 'teste';
+    document.title = `teste`;
   };
-  return <Button variant="contained" onClick={onClick}>Hello world</Button>;
+  return (
+    <Button onClick={onClick} variant="contained">
+      Hello world
+    </Button>
+  );
 }

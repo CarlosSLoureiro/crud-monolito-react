@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from "next/server";
 
 export async function AuthenticatedMiddleware(request: NextRequest) {
-    // return NextResponse.json({ message: 'user not logged' });
+  // return NextResponse.json({ message: 'user not logged' });
 }
