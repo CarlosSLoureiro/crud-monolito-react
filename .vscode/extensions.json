@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "dbaeumer.vscode-eslint",
+        "rvest.vs-code-prettier-eslint",
+        "firsttris.vscode-jest-runner",
+        "MarkosTh09.color-picker",
+        "PKief.material-icon-theme",
+        "eamodio.gitlens",
+    ]
+}
