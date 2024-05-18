@@ -1,11 +1,11 @@
-import React from "react";
+import { useEffect, useState } from "react";
 
 import { StatusResponse } from "@server/controllers/status/types";
 
 export const useStatusScreen = () => {
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
-  const [apiResponse, setApiResponse] = React.useState<StatusResponse>();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [apiResponse, setApiResponse] = useState<StatusResponse>();
 
   const handleOpen = async () => {
     setIsLoading(true);
@@ -25,7 +25,7 @@ export const useStatusScreen = () => {
     setIsModalOpen(false);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (apiResponse) {
       setIsModalOpen(true);
     }
