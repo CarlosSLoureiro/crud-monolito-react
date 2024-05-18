@@ -19,6 +19,7 @@
     "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
+    "react-json-pretty": "^2.2.0",
     "sequelize": "^6.37.3",
     "sequelize-typescript": "^2.1.6"
   },

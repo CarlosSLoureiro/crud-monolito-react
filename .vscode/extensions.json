@@ -4,6 +4,7 @@
         "rvest.vs-code-prettier-eslint",
         "firsttris.vscode-jest-runner",
         "MarkosTh09.color-picker",
+        "styled-components.vscode-styled-components",
         "PKief.material-icon-theme",
         "eamodio.gitlens",
     ]

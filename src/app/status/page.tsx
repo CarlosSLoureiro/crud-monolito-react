@@ -1,6 +1,7 @@
 "use client";
 
-import * as React from "react";
+import React from "react";
+import JSONPretty from "react-json-pretty";
 
 import Backdrop from "@mui/material/Backdrop";
 import Button from "@mui/material/Button";
@@ -12,7 +13,9 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
-import { StatusResponse } from "@server/controllers/status/types";
+
+import { useStatusScreen } from "./hooks";
+import { Container, jsonPrettyStyles } from "./styles";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -24,43 +27,10 @@ const Transition = React.forwardRef(function Transition(
 });
 
 export default function SimpleBackdrop() {
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
-  const [apiResponse, setApiResponse] = React.useState<StatusResponse>();
-
-  const handleOpen = async () => {
-    setIsLoading(true);
-    try {
-      const res = await fetch(`/api/status`);
-      const resJson = await res.json();
-      setApiResponse(resJson);
-    } catch (error: any) {
-      alert(`Error in console`);
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-  React.useEffect(() => {
-    if (apiResponse) {
-      setIsModalOpen(true);
-    }
-  }, [apiResponse]);
+  const { isLoading, isModalOpen, apiResponse, handleOpen, handleCloseModal } = useStatusScreen();
 
   return (
-    <div
-      style={{
-        display: `flex`,
-        justifyContent: `center`,
-        alignItems: `center`,
-        height: `100vh`,
-      }}
-    >
+    <Container>
       <Button onClick={handleOpen} variant="contained">
         Conferir Status
       </Button>
@@ -78,7 +48,7 @@ export default function SimpleBackdrop() {
         <DialogContent>
           {apiResponse && (
             <DialogContentText id="alert-dialog-slide-description">
-              {JSON.stringify(apiResponse)}
+              <JSONPretty data={apiResponse} id="json-pretty" theme={jsonPrettyStyles}></JSONPretty>
             </DialogContentText>
           )}
         </DialogContent>
@@ -86,6 +56,6 @@ export default function SimpleBackdrop() {
           <Button onClick={handleCloseModal}>Fechar</Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </Container>
   );
 }
