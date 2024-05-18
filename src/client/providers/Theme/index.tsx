@@ -1,4 +1,4 @@
-import { FC, ReactNode, useEffect, useInsertionEffect, useLayoutEffect, useState } from "react";
+import { FC, ReactNode, useEffect, useState } from "react";
 
 import { PaletteMode } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -25,32 +25,10 @@ const ThemeProvider: FC<ProviderProps> = ({ children }) => {
   userSystemDark.addEventListener(`change`, e => {
     if (e.matches) {
       setTheme(`dark`);
+    } else {
       setTheme(`light`);
     }
   });
-  /*
-  const [theme, setTheme] = useState<PaletteMode>(`light`);
-
-  useLayoutEffect(() => {
-    const userSystemDark = window.matchMedia(`(prefers-color-scheme: dark)`);
-    const userPrefTheme = window.localStorage.getItem(`theme`);
-
-    const isUserSystemDark = userSystemDark.matches;
-    const isUserPrefDark = userPrefTheme === `dark`;
-
-    const isDark =
-      userPrefTheme !== null && userPrefTheme !== `auto` ? isUserPrefDark : isUserSystemDark;
-
-    setTheme(isDark ? `dark` : `light`);
-
-    userSystemDark.addEventListener(`change`, e => {
-      if (e.matches) {
-        setTheme(`dark`);
-        setTheme(`light`);
-      }
-    });
-  }, []);
-  */
 
   useEffect(() => {
     if (theme === `dark`) {
