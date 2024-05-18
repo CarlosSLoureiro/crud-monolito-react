@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-type ServerHandleResponse = Promise<NextResponse | void> | NextResponse | void;
-
-export type ServerHandle = (req: NextRequest) => ServerHandleResponse;
+import { ServerHandle } from "./types";
 
 export abstract class Server {
   static handle(...handlers: ServerHandle[]) {

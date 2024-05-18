@@ -85,6 +85,7 @@
                 "arrowParens": "avoid",
                 "trailingComma": "all",
                 "tabWidth": 2,
+                "printWidth": 100,
                 "endOfLine": "auto"
             }
         ],
@@ -92,8 +93,10 @@
             "warn",
             {
               "groups": [
-                ["next/server"],
+                ["next", "next/server", "^"],
                 ["^"],
+                ["@server/database"],
+                ["@*"],
                 ["^\\.", "^\\.\\.(?!/?$)", "^\\.\\./?$"],
                 ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
                 ["^\\u0000"]
