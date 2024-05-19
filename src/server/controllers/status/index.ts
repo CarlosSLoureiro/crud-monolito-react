@@ -7,8 +7,8 @@ import { getDatabaseTimeUseCase } from "@server/usecases/getDatabaseTimeUseCase"
 
 import { StatusResponse } from "./types";
 
-export const StatusController = async (req: NextRequest) => {
-  const params = Object.fromEntries(req.nextUrl.searchParams.entries());
+export const StatusController = async (request: NextRequest) => {
+  const params = Object.fromEntries(request.nextUrl.searchParams.entries());
 
   const status = await getDatabaseTimeUseCase({ params });
 

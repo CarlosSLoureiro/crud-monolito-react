@@ -1,5 +1,5 @@
 export type StatusResponse = {
   message: string;
-  database: any;
+  database: string;
   params: any;
 };

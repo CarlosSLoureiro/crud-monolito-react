@@ -1,8 +1,11 @@
-import { FC, ReactNode, useEffect, useState } from "react";
+import { FC, ReactNode } from "react";
 
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 
+import { GlobalContext } from "@client/contexts/Global";
+
+import { useGlobalProvider } from "./hooks";
 import ThemeProvider from "../Theme";
 
 interface ProviderProps {
@@ -10,15 +13,8 @@ interface ProviderProps {
 }
 
 const GlobalProvider: FC<ProviderProps> = ({ children }) => {
-  const [isWindowDefined, setIsWindowDefined] = useState(false);
-
-  useEffect(() => {
-    if (typeof window !== `undefined`) {
-      setIsWindowDefined(true);
-    } else {
-      throw new Error(`Window is not defined.`);
-    }
-  }, []);
+  const { isWindowDefined, isLoadingBackdrop, showLoadingBackdrop, hideLoadingBackdrop } =
+    useGlobalProvider();
 
   if (!isWindowDefined) {
     return (
@@ -29,9 +25,22 @@ const GlobalProvider: FC<ProviderProps> = ({ children }) => {
   }
 
   return (
-    <>
-      <ThemeProvider>{children}</ThemeProvider>
-    </>
+    <GlobalContext.Provider
+      value={{
+        showLoadingBackdrop,
+        hideLoadingBackdrop,
+      }}
+    >
+      <ThemeProvider>
+        <Backdrop
+          open={isLoadingBackdrop}
+          sx={{ color: `#fff`, zIndex: theme => theme.zIndex.drawer + 1 }}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+        <>{children}</>
+      </ThemeProvider>
+    </GlobalContext.Provider>
   );
 };
 
