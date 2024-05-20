@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { StatusResponse } from "@server/controllers/status/types";
+import { type StatusResponse } from "@server/controllers/status/types";
 
 export const useStatusScreen = () => {
   const [isLoading, setIsLoading] = useState(false);

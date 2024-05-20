@@ -4,7 +4,7 @@ import { StatusCodes } from "http-status-codes";
 import { z } from "@server/utils/validator";
 import { INVALID_BODY } from "@server/utils/validator/messages";
 
-import { LoginRequest } from "./types";
+import { type LoginRequest } from "./types";
 
 export const LoginValidator = async (request: Request) => {
   try {

@@ -12,7 +12,17 @@ export abstract class AuthService {
     return jwt.sign(authenticatedUser, `SECRET`, { expiresIn: `7d` });
   }
 
-  static async login() {
-    return await UserRepository.findById(666);
+  static async login(email: string, password: string) {
+    const user = await UserRepository.findByEmail(email);
+
+    if (!user) {
+      throw new Error(`Usuário não encontrado`);
+    }
+
+    if (user.password !== password) {
+      throw new Error(`Senha inválida`);
+    }
+
+    return user;
   }
 }

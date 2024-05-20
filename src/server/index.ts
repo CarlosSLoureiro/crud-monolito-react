@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { StatusCodes } from "http-status-codes";
 
-import { ServerHandle } from "./types";
+import type { ServerHandle } from "./types";
 
 export abstract class Server {
   static handle(...handlers: ServerHandle[]) {

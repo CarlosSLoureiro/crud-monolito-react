@@ -1,6 +1,6 @@
-import { FC, ReactNode, useEffect, useState } from "react";
+import { type FC, type ReactNode, useEffect, useState } from "react";
 
-import { PaletteMode } from "@mui/material";
+import { type PaletteMode } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider as MUIThemeProvider } from "@mui/material/styles";
 

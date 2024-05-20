@@ -5,11 +5,12 @@ import { StatusCodes } from "http-status-codes";
 
 import { AuthService } from "@server/services/auth";
 
-import { LoginRequest, LoginResponse } from "./types";
+import { type LoginRequest, type LoginResponse } from "./types";
 
 export const LoginController = async (request: Request) => {
   const params: LoginRequest = await request.json();
-  const user = await AuthService.login();
+
+  const user = await AuthService.login(params.email, params.password);
 
   console.log(`user`, user);
 

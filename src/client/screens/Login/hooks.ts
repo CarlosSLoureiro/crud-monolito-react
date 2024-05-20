@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 
 import { GlobalContext } from "@client/contexts/Global";
-import { LoginRequest, LoginResponse } from "@server/controllers/login/types";
-import { ZodFormatedError } from "@server/utils/validator/types";
+import { type LoginRequest, type LoginResponse } from "@server/controllers/login/types";
+import { type ZodFormatedError } from "@server/utils/validator/types";
 
 export const useLoginScreen = () => {
   const [response, setResponse] = useState<LoginResponse>();

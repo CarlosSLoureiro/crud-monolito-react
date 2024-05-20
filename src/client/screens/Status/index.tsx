@@ -1,4 +1,4 @@
-import { forwardRef, ReactElement, Ref } from "react";
+import { forwardRef, type ReactElement, type Ref } from "react";
 import JSONPretty from "react-json-pretty";
 
 import Backdrop from "@mui/material/Backdrop";
@@ -10,7 +10,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
-import { TransitionProps } from "@mui/material/transitions";
+import { type TransitionProps } from "@mui/material/transitions";
 
 import ColorSchemeSwitch from "@client/components/ColorSchemeSwitch";
 

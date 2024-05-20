@@ -1,7 +1,16 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  type Relation,
+} from "typeorm";
+
+import { RefreshToken } from "./refreshToken";
 
 @Entity(`users`)
-export default class User {
+export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -16,4 +25,8 @@ export default class User {
 
   @Column({ nullable: true })
   picture?: string;
+
+  @OneToMany(() => RefreshToken, (refreshToken: RefreshToken) => refreshToken.user)
+  @JoinColumn({ name: `id`, referencedColumnName: `userId` })
+  refreshTokens?: Relation<RefreshToken>[];
 }

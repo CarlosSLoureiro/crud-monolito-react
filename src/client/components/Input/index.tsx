@@ -1,4 +1,4 @@
-import TextField, { TextFieldProps } from "@mui/material/TextField";
+import TextField, { type TextFieldProps } from "@mui/material/TextField";
 
 import Errors from "./errors";
 
