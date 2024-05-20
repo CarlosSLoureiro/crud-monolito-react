@@ -1,20 +1,21 @@
 "use server";
 
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { StatusCodes } from "http-status-codes";
 
-import { getDatabaseTimeUseCase } from "@server/usecases/getDatabaseTimeUseCase";
+import { StatusService } from "@server/services/status";
 
 import { StatusResponse } from "./types";
 
-export const StatusController = async (request: NextRequest) => {
-  const params = Object.fromEntries(request.nextUrl.searchParams.entries());
+export const StatusController = async (request: Request) => {
+  const params = Object.fromEntries(new URL(request.url).searchParams.entries());
 
-  const status = await getDatabaseTimeUseCase({ params });
+  const status = await StatusService.getDatabaseTime();
 
   const response = {
     message: `OK`,
     ...status,
+    params,
   } satisfies StatusResponse;
 
   return NextResponse.json(response, { status: StatusCodes.OK });

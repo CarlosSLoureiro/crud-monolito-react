@@ -1,10 +1,11 @@
 /* eslint-disable no-console */
+import { DataSource } from "typeorm";
 
-import { Sequelize } from "sequelize-typescript";
+import User from "./entities/user";
 
-const models: never[] = [];
+import "reflect-metadata";
 
-console.log(process.env);
+const entities = [User];
 
 const { MYSQL_BASE, MYSQL_USER, MYSQL_PASS, MYSQL_HOST } = {
   MYSQL_BASE: `app`,
@@ -13,21 +14,20 @@ const { MYSQL_BASE, MYSQL_USER, MYSQL_PASS, MYSQL_HOST } = {
   MYSQL_HOST: `localhost`,
 };
 
-export const Database = new Sequelize(MYSQL_BASE, MYSQL_USER, MYSQL_PASS, {
+export const Database = new DataSource({
+  type: `mysql`,
+  driver: require(`mysql2`),
   host: MYSQL_HOST,
-  logging: false,
-  dialect: `mysql`,
-  dialectModule: require(`mysql2`),
-  models,
+  port: 3306,
+  username: MYSQL_USER,
+  password: MYSQL_PASS,
+  database: MYSQL_BASE,
+  logging: true,
+  entities,
+  migrations: [],
+  subscribers: [],
 });
 
-if (process.env.NEXT_IS_EXPORT_WORKER !== `true`) {
-  Database.sync({ force: false })
-    .then(() => {
-      console.log(`\x1b[32m`, `✓ Successfully connected to the Database!`, `\x1b[0m`);
-    })
-    .catch(e => {
-      console.log(e);
-      console.log(`\x1b[31m`, `✓ Failed to connect to the Database!`, `\x1b[0m`);
-    });
+if (!Database.isInitialized && process.env.NEXT_IS_EXPORT_WORKER !== `true`) {
+  await Database.initialize();
 }

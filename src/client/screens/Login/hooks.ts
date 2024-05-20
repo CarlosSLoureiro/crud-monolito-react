@@ -1,21 +1,12 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { GlobalContext } from "@client/contexts/Global";
-
-interface HandleLogin {
-  email: string;
-  password: string;
-}
-
-type Errors = {
-  [key: string]: {
-    _errors: string[];
-  };
-};
+import { LoginRequest, LoginResponse } from "@server/controllers/login/types";
+import { ZodFormatedError } from "@server/utils/validator/types";
 
 export const useLoginScreen = () => {
-  const [apiResponse, setApiResponse] = useState<any>();
-  const [errors, setErrors] = useState<Errors>();
+  const [response, setResponse] = useState<LoginResponse>();
+  const [errors, setErrors] = useState<ZodFormatedError>();
 
   const { showLoadingBackdrop, hideLoadingBackdrop } = useContext(GlobalContext);
 
@@ -37,13 +28,13 @@ export const useLoginScreen = () => {
           body: JSON.stringify({
             email: email.toString(),
             password: password.toString(),
-          }),
+          } satisfies LoginRequest),
         });
 
         const resJson = await res.json();
 
         if (res.ok) {
-          alert(`Success!`);
+          setResponse(resJson);
           return;
         }
 
@@ -56,6 +47,12 @@ export const useLoginScreen = () => {
       }
     }
   };
+
+  useEffect(() => {
+    if (response) {
+      console.log(response);
+    }
+  }, [response]);
 
   return {
     errors,

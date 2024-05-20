@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { StatusCodes } from "http-status-codes";
 
 import { ServerHandle } from "./types";
 
@@ -7,13 +8,16 @@ export abstract class Server {
     return async (req: NextRequest) => {
       for (const handle of handlers) {
         try {
-          const res = await handle(req);
+          const res = await handle(req.clone());
           if (res) {
             return res;
           }
         } catch (error: any) {
           console.error(error);
-          return NextResponse.json({ message: error.message });
+          return NextResponse.json(
+            { message: error.message },
+            { status: error.code || StatusCodes.INTERNAL_SERVER_ERROR },
+          );
         }
       }
     };

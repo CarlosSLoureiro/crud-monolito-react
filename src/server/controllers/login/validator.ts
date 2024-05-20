@@ -1,17 +1,19 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { StatusCodes } from "http-status-codes";
 
-import { INVALID_BODY } from "../messages";
-import { z } from "..";
+import { z } from "@server/utils/validator";
+import { INVALID_BODY } from "@server/utils/validator/messages";
 
-export const LoginValidator = async (request: NextRequest) => {
+import { LoginRequest } from "./types";
+
+export const LoginValidator = async (request: Request) => {
   try {
-    const params = await request.json();
+    const params: LoginRequest = await request.json();
 
     const scheme = z.object({
       email: z.string().email(),
       password: z.string(),
-    });
+    } satisfies Record<keyof LoginRequest, any>);
 
     const result = scheme.safeParse(params);
 

@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export type ServerHandleResponse<T = any> = Promise<NextResponse<T> | void>;
 
-export type ServerHandle = (req: NextRequest) => ServerHandleResponse;
+export type ServerHandle = (req: Request) => ServerHandleResponse;
