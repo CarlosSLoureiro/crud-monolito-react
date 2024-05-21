@@ -7,7 +7,7 @@ import {
   type Relation,
 } from "typeorm";
 
-import { RefreshToken } from "./refreshToken";
+import { UserSession } from "./userSession";
 
 @Entity(`users`)
 export class User {
@@ -26,7 +26,7 @@ export class User {
   @Column({ nullable: true })
   picture?: string;
 
-  @OneToMany(() => RefreshToken, (refreshToken: RefreshToken) => refreshToken.user)
+  @OneToMany(() => UserSession, (userSession: UserSession) => userSession.user)
   @JoinColumn({ name: `id`, referencedColumnName: `userId` })
-  refreshTokens?: Relation<RefreshToken>[];
+  sessions?: Relation<UserSession>[];
 }

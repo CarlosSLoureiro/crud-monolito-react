@@ -2,8 +2,8 @@ import type { ZodFormattedError } from "./types";
 
 export class ValidationError extends Error {
   constructor(
-    public message: string,
     public field: string,
+    public message: string,
   ) {
     super(message);
   }

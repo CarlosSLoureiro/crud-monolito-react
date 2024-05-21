@@ -1,12 +1,12 @@
 /* eslint-disable no-console */
 import { DataSource } from "typeorm";
 
-import { RefreshToken } from "./entities/refreshToken";
 import { User } from "./entities/user";
+import { UserSession } from "./entities/userSession";
 
 import "reflect-metadata";
 
-const entities = [User, RefreshToken];
+const entities = [User, UserSession];
 
 const { MYSQL_BASE, MYSQL_USER, MYSQL_PASS, MYSQL_HOST } = {
   MYSQL_BASE: `app`,

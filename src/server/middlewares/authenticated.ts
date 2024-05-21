@@ -2,9 +2,10 @@ import { NextResponse } from "next/server";
 import { StatusCodes } from "http-status-codes";
 import jwt, { TokenExpiredError } from "jsonwebtoken";
 
-type AuthenticatedUser = {
-  id: string;
-  password: string;
+export type AuthenticatedUser = {
+  session: string;
+  id: number;
+  password?: string;
 };
 
 export async function AuthenticatedMiddleware(request: Request) {
