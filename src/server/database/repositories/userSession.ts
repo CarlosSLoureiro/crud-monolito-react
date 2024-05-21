@@ -11,4 +11,20 @@ export abstract class UserSessionRepository {
       userId: user.id,
     });
   }
+
+  static async findById(id: number) {
+    return await userSessionRepository.findOne({
+      where: { id },
+    });
+  }
+
+  static async findBySession(session: string) {
+    return await userSessionRepository.findOne({
+      where: { session },
+    });
+  }
+
+  static async update(session: string, data: Partial<UserSession>) {
+    return await userSessionRepository.update({ session }, data);
+  }
 }
