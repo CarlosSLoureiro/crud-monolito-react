@@ -54,7 +54,7 @@ export async function AuthenticatedMiddleware(request: Request) {
       );
     }
 
-    return NextResponse.json({ authenticatedUser }, { status: StatusCodes.UNAUTHORIZED });
+    return NextResponse.json({ authenticatedUser }, { status: StatusCodes.OK });
   } catch (err) {
     if (err instanceof TokenExpiredError) {
       return NextResponse.json(

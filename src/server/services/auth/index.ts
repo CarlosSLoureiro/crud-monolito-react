@@ -23,7 +23,7 @@ export abstract class AuthService {
     const authenticatedUser = { session, id, pw: password } satisfies AuthenticatedUser;
 
     const accessToken = jwt.sign(authenticatedUser, `SECRET`, {
-      expiresIn: `15m`,
+      expiresIn: `1m`,
     });
 
     const userSession = await UserSessionRepository.create(user, {
@@ -49,7 +49,7 @@ export abstract class AuthService {
   }
 
   static async refreshTokens({ refreshToken }: AuthServiceRefreshTokensParams) {
-    const { id, hash: oldSessionHash } = jwt.verify(
+    const { id, hash: encryptedSessionHash } = jwt.verify(
       refreshToken,
       `SECRET`,
     ) as RefreshTokenInterface;
@@ -57,8 +57,16 @@ export abstract class AuthService {
     const session = await UserSessionRepository.findById(id);
 
     if (session) {
-      const hash = CryptoJS.AES.encrypt(session.session, `SECRET`).toString();
-      if (oldSessionHash === hash) {
+      const sessionHash = session.session;
+      const decryptedHash = CryptoJS.AES.decrypt(encryptedSessionHash, `SECRET`).toString(
+        CryptoJS.enc.Utf8,
+      );
+
+      console.log(`encryptedSessionHash`, encryptedSessionHash);
+      console.log(`sessionHash`, sessionHash);
+      console.log(`decryptedHash`, decryptedHash);
+
+      if (decryptedHash === sessionHash) {
         const user = await UserRepository.findById(session.userId);
 
         if (user) {
@@ -71,17 +79,17 @@ export abstract class AuthService {
           } satisfies AuthenticatedUser;
 
           const accessToken = jwt.sign(authenticatedUser, `SECRET`, {
-            expiresIn: `15m`,
+            expiresIn: `1m`,
           });
 
-          await UserSessionRepository.update(session.session, {
+          await UserSessionRepository.update(sessionHash, {
             session: newSession,
           });
 
           const newHash = CryptoJS.AES.encrypt(newSession, `SECRET`).toString();
 
           const newRefreshToken = jwt.sign(
-            { id: userSession.id, hash: newHash } satisfies RefreshTokenInterface,
+            { id, hash: newHash } satisfies RefreshTokenInterface,
             `SECRET`,
             {
               expiresIn: `7d`,

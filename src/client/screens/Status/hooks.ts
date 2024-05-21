@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 
 import { type StatusResponse } from "@server/controllers/status/types";
 
+import { customFetch } from "@client/hooks/useRequest";
+
 export const useStatusScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -9,15 +11,16 @@ export const useStatusScreen = () => {
 
   const handleOpen = async () => {
     setIsLoading(true);
-    const accessToken = window.localStorage.getItem(`accessToken`);
-
     try {
-      const res = await fetch(`/api/status`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      const resJson = await res.json();
+      const get = async () => {
+        const res = await customFetch(`/api/status`);
+        return await res.json();
+      };
+
+      const [resJson, resJson2] = await Promise.all([get(), get()]);
+
+      console.log(resJson, resJson2);
+
       setApiResponse(resJson);
     } catch (error: any) {
       alert(`Error in console`);
