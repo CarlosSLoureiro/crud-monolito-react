@@ -3,6 +3,8 @@ import { StatusCodes } from "http-status-codes";
 
 import type { ServerHandle } from "./types";
 
+import { ValidationError } from "./utils/validator/error";
+
 export abstract class Server {
   static handle(...handlers: ServerHandle[]) {
     return async (req: NextRequest) => {
@@ -13,7 +15,10 @@ export abstract class Server {
             return res;
           }
         } catch (error: any) {
-          console.error(error);
+          if (error instanceof ValidationError) {
+            return NextResponse.json(error.format(), { status: StatusCodes.BAD_REQUEST });
+          }
+
           return NextResponse.json(
             { message: error.message },
             { status: error.code || StatusCodes.INTERNAL_SERVER_ERROR },

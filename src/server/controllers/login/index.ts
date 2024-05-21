@@ -10,13 +10,11 @@ import { type LoginRequest, type LoginResponse } from "./types";
 export const LoginController = async (request: Request) => {
   const params: LoginRequest = await request.json();
 
-  const user = await AuthService.login(params.email, params.password);
-
-  console.log(`user`, user);
+  const { token, user } = await AuthService.login(params.email, params.password);
 
   const response = {
-    token: AuthService.getToken(),
-    user: user,
+    token,
+    user,
   } satisfies LoginResponse;
 
   return NextResponse.json(response, { status: StatusCodes.OK });

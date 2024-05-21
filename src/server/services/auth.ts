@@ -1,28 +1,30 @@
 import jwt from "jsonwebtoken";
 
+import type { User } from "@server/database/entities/user";
 import { UserRepository } from "@server/database/repositories/user";
 
-export abstract class AuthService {
-  static getToken(): string {
-    const authenticatedUser = {
-      id: 666,
-      password: `senha`,
-    };
+import { ValidationError } from "@server/utils/validator/error";
 
-    return jwt.sign(authenticatedUser, `SECRET`, { expiresIn: `7d` });
+export abstract class AuthService {
+  static getToken(user: User): string {
+    const { id, password } = user;
+    return jwt.sign({ id, password }, `SECRET`, { expiresIn: `7d` });
   }
 
   static async login(email: string, password: string) {
     const user = await UserRepository.findByEmail(email);
 
     if (!user) {
-      throw new Error(`Usuário não encontrado`);
+      throw new ValidationError(`Usuário não encontrado`, `email`);
     }
 
     if (user.password !== password) {
-      throw new Error(`Senha inválida`);
+      throw new ValidationError(`Senha inválida`, `password`);
     }
 
-    return user;
+    return {
+      token: this.getToken(user),
+      user,
+    };
   }
 }

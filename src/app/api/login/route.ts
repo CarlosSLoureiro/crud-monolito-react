@@ -4,4 +4,4 @@ import { LoginValidator } from "@server/controllers/login/validator";
 
 export const dynamic = `force-dynamic`;
 
-export const POST = Server.handle(LoginController);
+export const POST = Server.handle(LoginValidator, LoginController);

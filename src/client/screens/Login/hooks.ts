@@ -2,11 +2,11 @@ import { useContext, useEffect, useState } from "react";
 
 import { GlobalContext } from "@client/contexts/Global";
 import { type LoginRequest, type LoginResponse } from "@server/controllers/login/types";
-import { type ZodFormatedError } from "@server/utils/validator/types";
+import { type ZodFormattedError } from "@server/utils/validator/types";
 
 export const useLoginScreen = () => {
   const [response, setResponse] = useState<LoginResponse>();
-  const [errors, setErrors] = useState<ZodFormatedError>();
+  const [errors, setErrors] = useState<ZodFormattedError>();
 
   const { showLoadingBackdrop, hideLoadingBackdrop } = useContext(GlobalContext);
 
