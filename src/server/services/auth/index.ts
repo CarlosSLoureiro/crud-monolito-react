@@ -22,7 +22,7 @@ export abstract class AuthService {
 
     const authenticatedUser = { session, id, pw: password } satisfies AuthenticatedUser;
 
-    const accessToken = jwt.sign(authenticatedUser, `SECRET`, {
+    const accessToken = jwt.sign(authenticatedUser, process.env.SECRET, {
       expiresIn: `1m`,
     });
 
@@ -32,11 +32,11 @@ export abstract class AuthService {
       ip,
     });
 
-    const hash = CryptoJS.AES.encrypt(session, `SECRET`).toString();
+    const hash = CryptoJS.AES.encrypt(session, process.env.SECRET).toString();
 
     const refreshToken = jwt.sign(
       { id: userSession.id, hash } satisfies RefreshTokenInterface,
-      `SECRET`,
+      process.env.SECRET,
       {
         expiresIn: `7d`,
       },
@@ -51,20 +51,16 @@ export abstract class AuthService {
   static async refreshTokens({ refreshToken }: AuthServiceRefreshTokensParams) {
     const { id, hash: encryptedSessionHash } = jwt.verify(
       refreshToken,
-      `SECRET`,
+      process.env.SECRET,
     ) as RefreshTokenInterface;
 
     const session = await UserSessionRepository.findById(id);
 
     if (session) {
       const sessionHash = session.session;
-      const decryptedHash = CryptoJS.AES.decrypt(encryptedSessionHash, `SECRET`).toString(
+      const decryptedHash = CryptoJS.AES.decrypt(encryptedSessionHash, process.env.SECRET).toString(
         CryptoJS.enc.Utf8,
       );
-
-      console.log(`encryptedSessionHash`, encryptedSessionHash);
-      console.log(`sessionHash`, sessionHash);
-      console.log(`decryptedHash`, decryptedHash);
 
       if (decryptedHash === sessionHash) {
         const user = await UserRepository.findById(session.userId);
@@ -78,7 +74,7 @@ export abstract class AuthService {
             pw: user.password,
           } satisfies AuthenticatedUser;
 
-          const accessToken = jwt.sign(authenticatedUser, `SECRET`, {
+          const accessToken = jwt.sign(authenticatedUser, process.env.SECRET, {
             expiresIn: `1m`,
           });
 
@@ -86,11 +82,11 @@ export abstract class AuthService {
             session: newSession,
           });
 
-          const newHash = CryptoJS.AES.encrypt(newSession, `SECRET`).toString();
+          const newHash = CryptoJS.AES.encrypt(newSession, process.env.SECRET).toString();
 
           const newRefreshToken = jwt.sign(
             { id, hash: newHash } satisfies RefreshTokenInterface,
-            `SECRET`,
+            process.env.SECRET,
             {
               expiresIn: `7d`,
             },

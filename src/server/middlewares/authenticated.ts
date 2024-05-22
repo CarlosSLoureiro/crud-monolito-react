@@ -24,7 +24,7 @@ export async function AuthenticatedMiddleware(request: Request) {
   const accessToken = authorization.split(`Bearer `)[1];
 
   try {
-    const authenticatedUser = jwt.verify(accessToken, `SECRET`) as AuthenticatedUser;
+    const authenticatedUser = jwt.verify(accessToken, process.env.SECRET) as AuthenticatedUser;
 
     const session = await UserSessionRepository.findBySession(authenticatedUser.session);
 
