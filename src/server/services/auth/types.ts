@@ -1,4 +1,4 @@
-import { type User } from "@server/database/entities/user";
+import { type User } from "@server/database/entities";
 
 export type AuthServiceCreateTokensParams = {
   user: User;

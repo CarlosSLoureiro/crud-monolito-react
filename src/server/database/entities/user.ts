@@ -7,10 +7,10 @@ import {
   type Relation,
 } from "typeorm";
 
-import { UserSession } from "./userSession";
+import { UserSession } from ".";
 
 @Entity(`users`)
-export class User {
+export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -28,5 +28,5 @@ export class User {
 
   @OneToMany(() => UserSession, (userSession: UserSession) => userSession.user)
   @JoinColumn({ name: `id`, referencedColumnName: `userId` })
-  sessions?: Relation<UserSession>[];
+  sessions?: Relation<UserSession[]>;
 }

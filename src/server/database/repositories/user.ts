@@ -1,4 +1,4 @@
-import { User } from "../entities/user";
+import { User } from "../entities";
 import { Database } from "..";
 
 const userRepository = Database.getRepository(User);

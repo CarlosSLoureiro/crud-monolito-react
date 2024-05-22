@@ -1,12 +1,9 @@
 /* eslint-disable no-console */
 import { DataSource } from "typeorm";
 
-import { User } from "./entities/user";
-import { UserSession } from "./entities/userSession";
+import * as entities from "./entities";
 
 import "reflect-metadata";
-
-const entities = [User, UserSession];
 
 const { MYSQL_BASE, MYSQL_USER, MYSQL_PASS, MYSQL_HOST } = {
   MYSQL_BASE: `app`,
@@ -25,7 +22,7 @@ export const Database = new DataSource({
   database: MYSQL_BASE,
   logging: true,
   synchronize: true,
-  entities,
+  entities: Object.values(entities),
   migrations: [],
   subscribers: [],
 });

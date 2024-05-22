@@ -9,10 +9,10 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 
-import { User } from "./user";
+import { User } from ".";
 
 @Entity(`users_sessions`)
-export class UserSession {
+export class UserSessionEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
