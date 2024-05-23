@@ -3,9 +3,15 @@
 import { useEffect } from "react";
 
 import * as Sentry from "@sentry/nextjs";
-import Error from "next/error";
+import ErrorPage from "next/error";
+import { StatusCodes } from "http-status-codes";
 
-export default function GlobalError({ error }) {
+type GlobalErrorProps = {
+  error: Error & { digest?: string };
+  reset: () => void;
+};
+
+export default function GlobalError({ error }: GlobalErrorProps) {
   useEffect(() => {
     Sentry.captureException(error);
   }, [error]);
@@ -13,7 +19,7 @@ export default function GlobalError({ error }) {
   return (
     <html>
       <body>
-        <Error />
+        <ErrorPage statusCode={StatusCodes.INTERNAL_SERVER_ERROR} />
       </body>
     </html>
   );
