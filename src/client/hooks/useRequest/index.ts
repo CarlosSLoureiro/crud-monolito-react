@@ -6,6 +6,7 @@ import type { RefreshTokenResponse } from "@server/controllers/token/refresh/typ
 import type { ZodFormattedError } from "@server/utils/validator/types";
 
 import { GlobalContext } from "@client/contexts/Global";
+import { Auth } from "@client/utils/auth";
 
 type HookParams = {
   shouldShowLoadingBackdrop?: boolean;
@@ -18,7 +19,7 @@ async function doRefreshTokenRequest() {
   const request = await fetch(`/api/token/refresh`, {
     method: `POST`,
     body: JSON.stringify({
-      token: window.localStorage.getItem(`refreshToken`),
+      token: Auth.refreshToken,
     }),
   });
 
@@ -28,13 +29,11 @@ async function doRefreshTokenRequest() {
 }
 
 async function customFetch(input: RequestInfo, init?: RequestInit): Promise<Response> {
-  const accessToken = window.localStorage.getItem(`accessToken`);
-
   const modifiedInit = {
     ...init,
     headers: {
       ...init?.headers,
-      Authorization: `Bearer ${accessToken}`,
+      Authorization: `Bearer ${Auth.accessToken}`,
     },
   };
 
@@ -55,8 +54,8 @@ async function customFetch(input: RequestInfo, init?: RequestInit): Promise<Resp
             if (refreshTokenRequest.ok) {
               const tokens: RefreshTokenResponse = refreshTokenRequestResponse;
 
-              window.localStorage.setItem(`accessToken`, tokens.accessToken);
-              window.localStorage.setItem(`refreshToken`, tokens.refreshToken);
+              Auth.accessToken = tokens.accessToken;
+              Auth.refreshToken = tokens.refreshToken;
 
               modifiedInit.headers = {
                 ...modifiedInit.headers,
@@ -68,6 +67,7 @@ async function customFetch(input: RequestInfo, init?: RequestInit): Promise<Resp
               throw new Error(`Falha ao atualizar token`);
             }
           } catch (error) {
+            // eslint-disable-next-line no-console
             console.error(`Falha ao atualizar token`, error);
             throw error;
           } finally {

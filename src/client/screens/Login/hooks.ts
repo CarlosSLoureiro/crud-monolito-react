@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { type LoginRequest, type LoginResponse } from "@server/controllers/login/types";
 
 import { useRequest } from "@client/hooks/useRequest";
+import { Auth } from "@client/utils/auth";
 
 export const useLoginScreen = () => {
   const { response, errors, request } = useRequest<LoginResponse>({
@@ -31,9 +32,9 @@ export const useLoginScreen = () => {
 
   useEffect(() => {
     if (response) {
-      window.localStorage.setItem(`accessToken`, response.accessToken);
-      window.localStorage.setItem(`refreshToken`, response.refreshToken);
-      window.localStorage.setItem(`user`, JSON.stringify(response.user));
+      Auth.accessToken = response.accessToken;
+      Auth.refreshToken = response.refreshToken;
+      Auth.user = response.user;
     }
   }, [response]);
 
