@@ -80,9 +80,7 @@ async function customFetch(input: RequestInfo, init?: RequestInit): Promise<Resp
       } else {
         throw new Error(responseBody.message);
       }
-    }
-
-    if (response.status !== StatusCodes.BAD_REQUEST) {
+    } else if (response.status !== StatusCodes.BAD_REQUEST) {
       const responseBody = await response.json();
 
       throw new Error(responseBody.message);
