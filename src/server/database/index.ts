@@ -20,7 +20,7 @@ export const Database = new DataSource({
   username: MYSQL_USER,
   password: MYSQL_PASS,
   database: MYSQL_BASE,
-  logging: true,
+  logging: false,
   synchronize: true,
   entities: Object.values(entities),
   migrations: [],
