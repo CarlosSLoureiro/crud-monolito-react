@@ -1,9 +1,7 @@
 import { forwardRef, type ReactElement, type Ref } from "react";
 import JSONPretty from "react-json-pretty";
 
-import Backdrop from "@mui/material/Backdrop";
 import Button from "@mui/material/Button";
-import CircularProgress from "@mui/material/CircularProgress";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";

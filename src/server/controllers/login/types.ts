@@ -1,3 +1,5 @@
+import type { PublicUserData } from "@client/utils/auth/types";
+
 export type LoginRequest = {
   email: string;
   password: string;
@@ -6,5 +8,5 @@ export type LoginRequest = {
 export type LoginResponse = {
   accessToken: string;
   refreshToken: string;
-  user: any;
+  user: PublicUserData;
 };

@@ -1,9 +1,6 @@
 import CryptoJS from "crypto-js";
 
-type User = {
-  id: number;
-  name: string;
-};
+import type { PublicUserData } from "./types";
 
 export abstract class Auth {
   static get accessToken() {
@@ -18,16 +15,25 @@ export abstract class Auth {
   static set refreshToken(value: string) {
     window.localStorage.setItem(`refreshToken`, value);
   }
+  static get isAuthenticated() {
+    return this.accessToken !== `` && this.refreshToken !== `` && this.user !== undefined;
+  }
   static get user() {
     const data = window.localStorage.getItem(`user`);
     if (data !== null) {
-      return JSON.parse(CryptoJS.AES.decrypt(data, `CHAVEPUBLICA`).toString(CryptoJS.enc.Utf8));
+      try {
+        return JSON.parse(
+          CryptoJS.AES.decrypt(data, process.env.NEXT_PUBLIC_KEY).toString(CryptoJS.enc.Utf8),
+        );
+      } catch (error) {
+        return undefined;
+      }
     }
   }
-  static set user(value: User | undefined) {
+  static set user(value: PublicUserData | undefined) {
     window.localStorage.setItem(
       `user`,
-      CryptoJS.AES.encrypt(JSON.stringify(value), `CHAVEPUBLICA`).toString(),
+      CryptoJS.AES.encrypt(JSON.stringify(value), process.env.NEXT_PUBLIC_KEY).toString(),
     );
   }
 }

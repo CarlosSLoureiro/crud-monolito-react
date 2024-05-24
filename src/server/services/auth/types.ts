@@ -20,4 +20,5 @@ export type AuthServiceLoginParams = {
 export interface RefreshTokenInterface {
   id: number;
   hash: string;
+  pw?: string;
 }

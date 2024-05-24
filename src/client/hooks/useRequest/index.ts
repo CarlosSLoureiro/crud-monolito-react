@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useContext, useState } from "react";
 
 import { StatusCodes } from "http-status-codes";
@@ -12,6 +13,12 @@ type HookParams = {
   shouldShowLoadingBackdrop?: boolean;
   shouldShowToast?: boolean;
 };
+
+class AuthError extends Error {
+  constructor(message: string) {
+    super(message);
+  }
+}
 
 let isRefreshing = false;
 
@@ -63,12 +70,15 @@ async function customFetch(input: RequestInfo, init?: RequestInit): Promise<Resp
               };
 
               response = await fetch(input, modifiedInit);
+            } else if (refreshTokenRequest.status === StatusCodes.UNAUTHORIZED) {
+              throw new AuthError(`Erro de autenticação. Por favor, faça login novamente.`);
             } else {
-              throw new Error(`Falha ao atualizar token`);
+              throw new Error(
+                `Falha ao atualizar seus dados de acesso. Por favor, tente novamente.`,
+              );
             }
           } catch (error) {
-            // eslint-disable-next-line no-console
-            console.error(`Falha ao atualizar token`, error);
+            console.error(`Falha ao atualizar tokens`, error);
             throw error;
           } finally {
             isRefreshing = false;
@@ -78,7 +88,7 @@ async function customFetch(input: RequestInfo, init?: RequestInit): Promise<Resp
           response = await customFetch(input, modifiedInit);
         }
       } else {
-        throw new Error(responseBody.message);
+        throw new AuthError(`Erro de autenticação. Por favor, faça login novamente.`);
       }
     } else if (response.status !== StatusCodes.BAD_REQUEST) {
       const responseBody = await response.json();
@@ -115,6 +125,15 @@ export function useRequest<T = any>({
     } catch (error: any) {
       if (shouldShowToast) {
         showToast(error.message, `error`);
+      }
+
+      if (error instanceof AuthError) {
+        Auth.accessToken = ``;
+        Auth.refreshToken = ``;
+        Auth.user = undefined;
+        setTimeout(() => {
+          window.location.href = `/login`;
+        }, 5000);
       }
     } finally {
       if (shouldShowLoadingBackdrop) {
