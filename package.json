@@ -25,6 +25,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-json-pretty": "^2.2.0",
+    "react-toastify": "^10.0.5",
     "reflect-metadata": "^0.2.2",
     "typeorm": "^0.3.20",
     "uuid": "^9.0.1",

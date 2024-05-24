@@ -1,20 +1,17 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { type LoginRequest, type LoginResponse } from "@server/controllers/login/types";
-import { type ZodFormattedError } from "@server/utils/validator/types";
 
-import { GlobalContext } from "@client/contexts/Global";
+import { useRequest } from "@client/hooks/useRequest";
 
 export const useLoginScreen = () => {
-  const [response, setResponse] = useState<LoginResponse>();
-  const [errors, setErrors] = useState<ZodFormattedError>();
-
-  const { showLoadingBackdrop, hideLoadingBackdrop } = useContext(GlobalContext);
+  const { response, errors, request } = useRequest<LoginResponse>({
+    shouldShowLoadingBackdrop: true,
+    shouldShowToast: true,
+  });
 
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    setErrors(undefined);
 
     const data = new FormData(event.currentTarget);
 
@@ -22,30 +19,13 @@ export const useLoginScreen = () => {
     const password = data.get(`password`);
 
     if (email && password) {
-      showLoadingBackdrop();
-      try {
-        const res = await fetch(`/api/login`, {
-          method: `POST`,
-          body: JSON.stringify({
-            email: email.toString(),
-            password: password.toString(),
-          } satisfies LoginRequest),
-        });
-
-        const resJson = await res.json();
-
-        if (res.ok) {
-          setResponse(resJson);
-          return;
-        }
-
-        setErrors(resJson);
-      } catch (error: any) {
-        alert(`Error in console`);
-        console.error(error);
-      } finally {
-        hideLoadingBackdrop();
-      }
+      request(`/api/login`, {
+        method: `POST`,
+        body: JSON.stringify({
+          email: email.toString(),
+          password: password.toString(),
+        } satisfies LoginRequest),
+      });
     }
   };
 

@@ -1,4 +1,6 @@
+import "react-toastify/dist/ReactToastify.css";
 import { type FC, type ReactNode } from "react";
+import { ToastContainer } from "react-toastify";
 
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -13,8 +15,13 @@ interface ProviderProps {
 }
 
 const GlobalProvider: FC<ProviderProps> = ({ children }) => {
-  const { isWindowDefined, isLoadingBackdrop, showLoadingBackdrop, hideLoadingBackdrop } =
-    useGlobalProvider();
+  const {
+    isWindowDefined,
+    isLoadingBackdrop,
+    showToast,
+    showLoadingBackdrop,
+    hideLoadingBackdrop,
+  } = useGlobalProvider();
 
   if (!isWindowDefined) {
     return (
@@ -27,6 +34,7 @@ const GlobalProvider: FC<ProviderProps> = ({ children }) => {
   return (
     <GlobalContext.Provider
       value={{
+        showToast,
         showLoadingBackdrop,
         hideLoadingBackdrop,
       }}
@@ -39,6 +47,7 @@ const GlobalProvider: FC<ProviderProps> = ({ children }) => {
           <CircularProgress color="inherit" />
         </Backdrop>
         <>{children}</>
+        <ToastContainer />
       </ThemeProvider>
     </GlobalContext.Provider>
   );
