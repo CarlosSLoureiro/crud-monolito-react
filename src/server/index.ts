@@ -33,7 +33,8 @@ export abstract class Server {
             );
           }
 
-          console.log(error);
+          // eslint-disable-next-line no-console
+          console.error(error);
 
           return NextResponse.json(
             { message: error.message },
