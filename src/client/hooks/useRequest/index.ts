@@ -65,10 +65,10 @@ async function customFetch(input: RequestInfo, init?: RequestInit): Promise<Resp
 
               response = await fetch(input, modifiedInit);
             } else {
-              throw new Error(`Failed to refresh token: ${refreshTokenRequestResponse.message}`);
+              throw new Error(`Falha ao atualizar token`);
             }
           } catch (error) {
-            console.error(`Failed to refresh token:`, error);
+            console.error(`Falha ao atualizar token`, error);
             throw error;
           } finally {
             isRefreshing = false;
