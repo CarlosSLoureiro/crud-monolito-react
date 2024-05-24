@@ -28,7 +28,7 @@ export abstract class Server {
           if (process.env.NODE_ENV === `production`) {
             Sentry.captureException(error);
             return NextResponse.json(
-              { message: `Houve um erro erro inesperado` },
+              { message: `Houve um erro inesperado` },
               { status: StatusCodes.INTERNAL_SERVER_ERROR },
             );
           }
