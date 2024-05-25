@@ -2,10 +2,12 @@ import { useEffect } from "react";
 
 import { type LoginRequest, type LoginResponse } from "@server/controllers/login/types";
 
+import { useGlobalContext } from "@client/contexts/Global";
 import { useRequest } from "@client/hooks/useRequest";
 import { Auth } from "@client/utils/auth";
 
 export const useLoginScreen = () => {
+  const { showToast } = useGlobalContext();
   const { response, errors, request } = useRequest<LoginResponse>({
     shouldShowLoadingBackdrop: true,
     shouldShowToast: true,
@@ -35,6 +37,7 @@ export const useLoginScreen = () => {
       Auth.accessToken = response.accessToken;
       Auth.refreshToken = response.refreshToken;
       Auth.user = response.user;
+      showToast(`Login efetuado com sucesso!`, `success`);
     }
   }, [response]);
 
