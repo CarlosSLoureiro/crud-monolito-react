@@ -1,55 +1,15 @@
-import { type FC, type ReactNode, useEffect, useState } from "react";
+import { type FC } from "react";
 
-import { type PaletteMode } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
-import { createTheme, ThemeProvider as MUIThemeProvider } from "@mui/material/styles";
+import { ThemeProvider as MUIThemeProvider } from "@mui/material/styles";
 
 import { ThemeContext } from "@client/contexts/Theme";
 
-interface ProviderProps {
-  children: ReactNode;
-}
+import { useThemeProvider } from "./hooks";
+import type { ThemeProviderProps } from "./types";
 
-const ThemeProvider: FC<ProviderProps> = ({ children }) => {
-  const userSystemDark = window.matchMedia(`(prefers-color-scheme: dark)`);
-  const userPrefTheme = window.localStorage.getItem(`theme`);
-
-  const isUserSystemDark = userSystemDark.matches;
-  const isUserPrefDark = userPrefTheme === `dark`;
-
-  const isDark =
-    userPrefTheme !== null && userPrefTheme !== `auto` ? isUserPrefDark : isUserSystemDark;
-
-  const [theme, setTheme] = useState<PaletteMode>(isDark ? `dark` : `light`);
-
-  userSystemDark.addEventListener(`change`, e => {
-    if (e.matches) {
-      setTheme(`dark`);
-    } else {
-      setTheme(`light`);
-    }
-  });
-
-  useEffect(() => {
-    if (theme === `dark`) {
-      document.documentElement.setAttribute(`data-theme`, `dark`);
-    } else {
-      document.documentElement.setAttribute(`data-theme`, `light`);
-    }
-  }, [theme]);
-
-  const toggleTheme = () => {
-    const newTheme = theme === `light` ? `dark` : `light`;
-    window.localStorage.setItem(`theme`, newTheme);
-    setTheme(newTheme);
-  };
-
-  const darkTheme = createTheme({
-    palette: {
-      mode: theme,
-    },
-  });
-
+const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
+  const { theme, darkTheme, toggleTheme } = useThemeProvider();
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <MUIThemeProvider theme={darkTheme}>
