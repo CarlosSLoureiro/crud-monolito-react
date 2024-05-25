@@ -1,14 +1,12 @@
-import { useContext } from "react";
-
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 
-import { ThemeContext } from "@client/contexts/Theme";
+import { useThemeContext } from "@client/contexts/Theme";
 
 import MaterialUISwitch from "./switch";
 
 export default function ColorSchemeSwitch() {
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { theme, toggleTheme } = useThemeContext();
 
   return (
     <FormGroup>

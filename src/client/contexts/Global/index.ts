@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext, useContext } from "react";
 
 interface GlobalContextType {
   showToast: (message: string, type: `success` | `error` | `info` | `warning` | `default`) => void;
@@ -7,3 +7,5 @@ interface GlobalContextType {
 }
 
 export const GlobalContext = createContext<GlobalContextType>({} as GlobalContextType);
+
+export const useGlobalContext = () => useContext(GlobalContext);

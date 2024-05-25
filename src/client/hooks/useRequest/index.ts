@@ -1,12 +1,13 @@
 /* eslint-disable no-console */
-import { useContext, useState } from "react";
+import { useState } from "react";
 
+import { useRouter } from "next/navigation";
 import { StatusCodes } from "http-status-codes";
 
 import type { RefreshTokenResponse } from "@server/controllers/token/refresh/types";
 import type { ZodFormattedError } from "@server/utils/validator/types";
 
-import { GlobalContext } from "@client/contexts/Global";
+import { useGlobalContext } from "@client/contexts/Global";
 import { Auth } from "@client/utils/auth";
 
 type HookParams = {
@@ -104,9 +105,10 @@ export function useRequest<T = any>({
   shouldShowLoadingBackdrop = true,
   shouldShowToast = true,
 }: HookParams = {}) {
-  const { showToast, showLoadingBackdrop, hideLoadingBackdrop } = useContext(GlobalContext);
+  const { showToast, showLoadingBackdrop, hideLoadingBackdrop } = useGlobalContext();
   const [response, setResponse] = useState<T>();
   const [errors, setErrors] = useState<ZodFormattedError>();
+  const route = useRouter();
 
   const request = async (input: RequestInfo, init?: RequestInit) => {
     setErrors(undefined);
@@ -132,8 +134,8 @@ export function useRequest<T = any>({
         Auth.refreshToken = ``;
         Auth.user = undefined;
         setTimeout(() => {
-          window.location.href = `/login`;
-        }, 5000);
+          route.push(`/login`);
+        }, 6000);
       }
     } finally {
       if (shouldShowLoadingBackdrop) {
