@@ -10,10 +10,13 @@ export const useGlobalProvider = () => {
     message: string,
     type: `success` | `error` | `info` | `warning` | `default`,
   ) => {
+    const theme = document.documentElement.getAttribute(`data-theme`) || `light`;
+
     if (!activeToastMessages.some(activeToastMessage => activeToastMessage === message)) {
       const messageIndex = activeToastMessages.push(message);
       toast(message, {
         position: `top-right`,
+        theme: [`light`, `dark`].indexOf(theme) > -1 ? theme : `light`,
         type,
         onClose: () => activeToastMessages.splice(messageIndex, 1),
       });
