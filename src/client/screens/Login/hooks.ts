@@ -1,5 +1,7 @@
 import { useEffect } from "react";
 
+import { useRouter } from "next/navigation";
+
 import { type LoginRequest, type LoginResponse } from "@server/controllers/login/types";
 
 import { useGlobalContext } from "@client/contexts/Global";
@@ -8,6 +10,7 @@ import { Auth } from "@client/utils/auth";
 
 export const useLoginScreen = () => {
   const { showToast } = useGlobalContext();
+  const route = useRouter();
   const { response, errors, request } = useRequest<LoginResponse>({
     shouldShowLoadingBackdrop: true,
     shouldShowToast: true,
@@ -38,6 +41,9 @@ export const useLoginScreen = () => {
       Auth.refreshToken = response.refreshToken;
       Auth.user = response.user;
       showToast(`Login efetuado com sucesso!`, `success`);
+      setTimeout(() => {
+        route.push(`/status`);
+      }, 6000);
     }
   }, [response]);
 
