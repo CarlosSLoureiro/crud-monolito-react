@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
+import type { ToastProps } from "@client/contexts/Global";
+
 export const useGlobalProvider = () => {
   const [isWindowDefined, setIsWindowDefined] = useState(false);
   const [isLoadingBackdrop, setIsLoadingBackdrop] = useState(true);
   const activeToastMessages: string[] = [];
 
-  const showToast = (
-    message: string,
-    type: `success` | `error` | `info` | `warning` | `default`,
-  ) => {
+  const showToast = ({ message, type }: ToastProps) => {
     const theme = document.documentElement.getAttribute(`data-theme`) || `light`;
 
     if (!activeToastMessages.some(activeToastMessage => activeToastMessage === message)) {

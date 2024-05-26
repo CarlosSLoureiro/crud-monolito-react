@@ -3,6 +3,8 @@ import { type ReactNode } from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
+import GlobalProvider from "@client/providers/Global";
+
 import "./globals.css";
 
 // eslint-disable-next-line quotes
@@ -20,7 +22,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <GlobalProvider>{children}</GlobalProvider>
+      </body>
     </html>
   );
 }

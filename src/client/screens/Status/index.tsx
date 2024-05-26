@@ -25,11 +25,14 @@ const Transition = forwardRef(function Transition(
 });
 
 export default function StatusScreen() {
-  const { isModalOpen, response, handleOpen, handleCloseModal } = useStatusScreen();
+  const { isModalOpen, response, handleOpen, handleLogout, handleCloseModal } = useStatusScreen();
   return (
     <Container>
       <Button onClick={handleOpen} variant="contained">
         Conferir Status
+      </Button>
+      <Button onClick={handleLogout} variant="contained">
+        Sair
       </Button>
       <Dialog
         aria-describedby="alert-dialog-slide-description"

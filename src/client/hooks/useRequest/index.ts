@@ -121,21 +121,25 @@ export function useRequest<T = any>({
       const resJson = await res.json();
       if (res.ok) {
         setResponse(resJson);
-      } else {
-        setErrors(resJson);
+        return resJson;
       }
+      setErrors(resJson);
+      throw new Error(resJson.message);
     } catch (error: any) {
       if (shouldShowToast) {
-        showToast(error.message, `error`);
+        showToast({
+          message: error.message,
+          type: `error`,
+        });
       }
 
       if (error instanceof AuthError) {
         Auth.accessToken = ``;
         Auth.refreshToken = ``;
         Auth.user = undefined;
-        setTimeout(() => {
-          route.push(`/login`);
-        }, 6000);
+        route.push(`/login`);
+      } else {
+        throw error;
       }
     } finally {
       if (shouldShowLoadingBackdrop) {

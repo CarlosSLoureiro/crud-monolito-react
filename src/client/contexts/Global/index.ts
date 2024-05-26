@@ -1,7 +1,12 @@
 import { createContext, useContext } from "react";
 
+export interface ToastProps {
+  message: string;
+  type?: `success` | `error` | `info` | `warning` | `default`;
+}
+
 interface GlobalContextType {
-  showToast: (message: string, type: `success` | `error` | `info` | `warning` | `default`) => void;
+  showToast: (props: ToastProps) => void;
   showLoadingBackdrop: () => void;
   hideLoadingBackdrop: () => void;
 }

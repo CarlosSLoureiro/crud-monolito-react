@@ -40,10 +40,11 @@ export const useLoginScreen = () => {
       Auth.accessToken = response.accessToken;
       Auth.refreshToken = response.refreshToken;
       Auth.user = response.user;
-      showToast(`Login efetuado com sucesso!`, `success`);
-      setTimeout(() => {
-        route.push(`/status`);
-      }, 6000);
+      showToast({
+        message: `Login efetuado com sucesso!`,
+        type: `success`,
+      });
+      route.push(`/status`);
     }
   }, [response]);
 

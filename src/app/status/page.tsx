@@ -1,12 +1,12 @@
 "use client";
 
-import GlobalProvider from "@client/providers/Global";
+import PageProvider from "@client/providers/Page";
 import StatusScreen from "@client/screens/Status";
 
 export default function Page() {
   return (
-    <GlobalProvider>
+    <PageProvider mustBeAuthenticated>
       <StatusScreen />
-    </GlobalProvider>
+    </PageProvider>
   );
 }

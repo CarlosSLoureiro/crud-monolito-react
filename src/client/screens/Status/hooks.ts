@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 import { type StatusResponse } from "@server/controllers/status/types";
 
@@ -9,6 +10,10 @@ export const useStatusScreen = () => {
   const { response, request } = useRequest<StatusResponse>({
     shouldShowLoadingBackdrop: true,
   });
+  const { request: requestLogout } = useRequest<any>({
+    shouldShowLoadingBackdrop: false,
+    shouldShowToast: false,
+  });
 
   const handleOpen = async () => {
     const get = async () => {
@@ -18,6 +23,23 @@ export const useStatusScreen = () => {
     const [resJson, resJson2] = await Promise.all([get(), get()]);
 
     console.log(resJson, resJson2);
+  };
+
+  const handleLogout = () => {
+    toast.promise(
+      requestLogout(`/api/logout`, {
+        method: `POST`,
+      }),
+      {
+        pending: `Saindo...`,
+        success: `Promise resolved 👌`,
+        error: {
+          render({ data }: any) {
+            return data.message || `Houve uma falha na solicitação`;
+          },
+        },
+      },
+    );
   };
 
   const handleCloseModal = () => {
@@ -34,6 +56,7 @@ export const useStatusScreen = () => {
     isModalOpen,
     response,
     handleOpen,
+    handleLogout,
     handleCloseModal,
   };
 };
