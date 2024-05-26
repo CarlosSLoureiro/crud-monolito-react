@@ -18,11 +18,10 @@ export const useLoginScreen = () => {
     },
     hookOptions: {
       shouldShowLoadingBackdrop: true,
-      shouldShowToast: true,
     },
   });
 
-  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);

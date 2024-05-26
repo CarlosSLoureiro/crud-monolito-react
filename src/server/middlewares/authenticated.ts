@@ -28,7 +28,7 @@ export async function AuthenticatedMiddleware(request: Request) {
 
     const session = await UserSessionRepository.findBySession(authenticatedUser.session);
 
-    if (session && session.userId === authenticatedUser.id) {
+    if (session && session.userId === authenticatedUser.id && !session.revoked) {
       const user = await UserRepository.findById(authenticatedUser.id);
 
       if (user && authenticatedUser.pw === user.password) {

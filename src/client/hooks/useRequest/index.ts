@@ -15,7 +15,8 @@ type HookParams = {
   options?: RequestInit;
   hookOptions?: {
     shouldShowLoadingBackdrop?: boolean;
-    shouldShowToast?: boolean;
+    shouldShowErrorToast?: boolean;
+    willHandleValidationErrors?: boolean;
   };
 };
 
@@ -110,7 +111,11 @@ export function useRequest<RequestType = any, ResponseType = any>({
   options,
   hookOptions,
 }: HookParams) {
-  const { shouldShowLoadingBackdrop = true, shouldShowToast = true } = hookOptions || {};
+  const {
+    shouldShowLoadingBackdrop = false,
+    shouldShowErrorToast = true,
+    willHandleValidationErrors = false,
+  } = hookOptions || {};
 
   const { showToast, showLoadingBackdrop, hideLoadingBackdrop } = useGlobalContext();
   const [response, setResponse] = useState<ResponseType>();
@@ -132,17 +137,25 @@ export function useRequest<RequestType = any, ResponseType = any>({
       const resJson = await res.json();
       if (!res.ok) {
         setErrors(resJson);
-        throw new Error(resJson.message);
+        if (willHandleValidationErrors) {
+          throw new Error(resJson.message);
+        } else {
+          return resJson;
+        }
       }
 
       setResponse(resJson);
       return resJson;
     } catch (error: any) {
-      if (shouldShowToast) {
-        showToast({
-          message: error.message,
-          type: `error`,
-        });
+      if (error.message) {
+        if (shouldShowErrorToast) {
+          showToast({
+            message: error.message,
+            type: `error`,
+          });
+        }
+
+        console.error(error.message);
       }
 
       if (error instanceof AuthError) {

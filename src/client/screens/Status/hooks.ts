@@ -23,8 +23,8 @@ export const useStatusScreen = () => {
       method: `POST`,
     },
     hookOptions: {
-      shouldShowLoadingBackdrop: false,
-      shouldShowToast: false,
+      shouldShowErrorToast: false,
+      willHandleValidationErrors: true,
     },
   });
 
