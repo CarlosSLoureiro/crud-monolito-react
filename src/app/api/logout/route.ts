@@ -6,5 +6,5 @@ import { Server } from "@server";
 export const dynamic = `force-dynamic`;
 
 export const POST = Server.handle(
-  () => NextResponse.json({ message: `FAKE ERROR!` }, { status: StatusCodes.BAD_REQUEST }) as any,
+  () => NextResponse.json({ message: `FAKE ERROR!` }, { status: StatusCodes.OK }) as any,
 );

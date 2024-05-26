@@ -11,8 +11,12 @@ import { useGlobalContext } from "@client/contexts/Global";
 import { Auth } from "@client/utils/auth";
 
 type HookParams = {
-  shouldShowLoadingBackdrop?: boolean;
-  shouldShowToast?: boolean;
+  url: string;
+  options?: RequestInit;
+  hookOptions?: {
+    shouldShowLoadingBackdrop?: boolean;
+    shouldShowToast?: boolean;
+  };
 };
 
 class AuthError extends Error {
@@ -101,30 +105,38 @@ async function customFetch(input: RequestInfo, init?: RequestInit): Promise<Resp
   return response;
 }
 
-export function useRequest<T = any>({
-  shouldShowLoadingBackdrop = true,
-  shouldShowToast = true,
-}: HookParams = {}) {
+export function useRequest<RequestType = any, ResponseType = any>({
+  url,
+  options,
+  hookOptions,
+}: HookParams) {
+  const { shouldShowLoadingBackdrop = true, shouldShowToast = true } = hookOptions || {};
+
   const { showToast, showLoadingBackdrop, hideLoadingBackdrop } = useGlobalContext();
-  const [response, setResponse] = useState<T>();
+  const [response, setResponse] = useState<ResponseType>();
   const [errors, setErrors] = useState<ZodFormattedError>();
   const route = useRouter();
 
-  const request = async (input: RequestInfo, init?: RequestInit) => {
+  const request = async (data?: RequestType): Promise<ResponseType> => {
     setErrors(undefined);
 
     try {
       if (shouldShowLoadingBackdrop) {
         showLoadingBackdrop();
       }
-      const res = await customFetch(input, init);
+
+      const res = await customFetch(url, {
+        ...options,
+        body: data ? JSON.stringify(data) : undefined,
+      });
       const resJson = await res.json();
-      if (res.ok) {
-        setResponse(resJson);
-        return resJson;
+      if (!res.ok) {
+        setErrors(resJson);
+        throw new Error(resJson.message);
       }
-      setErrors(resJson);
-      throw new Error(resJson.message);
+
+      setResponse(resJson);
+      return resJson;
     } catch (error: any) {
       if (shouldShowToast) {
         showToast({
@@ -138,9 +150,9 @@ export function useRequest<T = any>({
         Auth.refreshToken = ``;
         Auth.user = undefined;
         route.push(`/login`);
-      } else {
-        throw error;
       }
+
+      throw error;
     } finally {
       if (shouldShowLoadingBackdrop) {
         hideLoadingBackdrop();

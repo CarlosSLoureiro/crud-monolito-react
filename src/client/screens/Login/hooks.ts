@@ -11,9 +11,15 @@ import { Auth } from "@client/utils/auth";
 export const useLoginScreen = () => {
   const { showToast } = useGlobalContext();
   const route = useRouter();
-  const { response, errors, request } = useRequest<LoginResponse>({
-    shouldShowLoadingBackdrop: true,
-    shouldShowToast: true,
+  const { response, errors, request } = useRequest<LoginRequest, LoginResponse>({
+    url: `/api/login`,
+    options: {
+      method: `POST`,
+    },
+    hookOptions: {
+      shouldShowLoadingBackdrop: true,
+      shouldShowToast: true,
+    },
   });
 
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -25,12 +31,9 @@ export const useLoginScreen = () => {
     const password = data.get(`password`);
 
     if (email && password) {
-      request(`/api/login`, {
-        method: `POST`,
-        body: JSON.stringify({
-          email: email.toString(),
-          password: password.toString(),
-        } satisfies LoginRequest),
+      request({
+        email: email.toString(),
+        password: password.toString(),
       });
     }
   };
