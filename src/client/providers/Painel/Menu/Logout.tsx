@@ -7,6 +7,8 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import Tooltip from "@mui/material/Tooltip";
+import Zoom from "@mui/material/Zoom";
 
 import type { LogoutResponse } from "@server/controllers/logout/types";
 
@@ -14,7 +16,13 @@ import { useThemeContext } from "@client/contexts/Theme";
 import { useRequest } from "@client/hooks/useRequest";
 import { Auth } from "@client/utils/auth";
 
-export const LogoutButton = () => {
+interface ComponentProps {
+  isDrawerOpen: boolean;
+}
+
+export const LogoutButton = ({ isDrawerOpen }: ComponentProps) => {
+  const label = `Sair`;
+
   const { theme } = useThemeContext();
   const router = useRouter();
 
@@ -56,14 +64,30 @@ export const LogoutButton = () => {
     );
   };
 
+  const Button = (
+    <ListItemButton onClick={handleLogout}>
+      <ListItemIcon>
+        <LogoutIcon />
+      </ListItemIcon>
+      <ListItemText primary={label} />
+    </ListItemButton>
+  );
+
   return (
     <Fragment>
-      <ListItemButton onClick={handleLogout}>
-        <ListItemIcon>
-          <LogoutIcon />
-        </ListItemIcon>
-        <ListItemText primary="Sair" />
-      </ListItemButton>
+      {!isDrawerOpen ? (
+        <Tooltip
+          arrow
+          disableInteractive
+          placement="right"
+          title={label}
+          TransitionComponent={Zoom}
+        >
+          {Button}
+        </Tooltip>
+      ) : (
+        Button
+      )}
     </Fragment>
   );
 };

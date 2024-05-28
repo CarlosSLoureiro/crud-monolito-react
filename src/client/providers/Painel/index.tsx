@@ -2,9 +2,16 @@
 
 import { type ReactNode, useState } from "react";
 
+import { useRouter } from "next/navigation";
+
+import BarChartIcon from "@mui/icons-material/BarChart";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import LayersIcon from "@mui/icons-material/Layers";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import PeopleIcon from "@mui/icons-material/People";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Badge from "@mui/material/Badge";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -14,11 +21,10 @@ import List from "@mui/material/List";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 
-import { mainListItems } from "@client/screens/Painel/listItems";
-
 import { AppBar } from "./AppBar";
 import { Drawer } from "./Drawer";
 
+import { Button } from "./Menu/Button";
 import { LogoutButton } from "./Menu/Logout";
 
 export default function PainelProvider({
@@ -26,6 +32,8 @@ export default function PainelProvider({
 }: Readonly<{
   children: ReactNode;
 }>) {
+  const router = useRouter();
+
   const [open, setOpen] = useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -53,7 +61,7 @@ export default function PainelProvider({
             <MenuIcon />
           </IconButton>
           <Typography color="inherit" component="h1" noWrap sx={{ flexGrow: 1 }} variant="h6">
-            Dashboard
+            Painel
           </Typography>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
@@ -77,9 +85,38 @@ export default function PainelProvider({
         </Toolbar>
         <Divider />
         <List component="nav">
-          {mainListItems}
+          <Button
+            icon={<DashboardIcon />}
+            isDrawerOpen={open}
+            label="Dashboard"
+            onClick={() => router.push(`/painel`)}
+          />
+          <Button
+            icon={<ShoppingCartIcon />}
+            isDrawerOpen={open}
+            label="Pedidos"
+            onClick={() => router.push(`/pedidos`)}
+          />
+          <Button
+            icon={<PeopleIcon />}
+            isDrawerOpen={open}
+            label="Clientes"
+            onClick={() => router.push(`/clientes`)}
+          />
+          <Button
+            icon={<BarChartIcon />}
+            isDrawerOpen={open}
+            label="Relatórios"
+            onClick={() => router.push(`/relatorios`)}
+          />
+          <Button
+            icon={<LayersIcon />}
+            isDrawerOpen={open}
+            label="Integrações"
+            onClick={() => router.push(`/integracoes`)}
+          />
           <Divider sx={{ my: 1 }} />
-          <LogoutButton />
+          <LogoutButton isDrawerOpen={open} />
         </List>
       </Drawer>
       <Box
