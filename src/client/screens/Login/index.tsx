@@ -15,7 +15,7 @@ import { Auth } from "@client/utils/auth";
 
 import { useLoginScreen } from "./hooks";
 
-export default function SignIn() {
+export default function LoginScreen() {
   const { errors, handleLogin } = useLoginScreen();
 
   return (

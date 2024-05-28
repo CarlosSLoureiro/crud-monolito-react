@@ -1,39 +1,59 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-import type { ToastProps } from "@client/contexts/Global";
+import type { BackdropProps, ToastProps } from "@client/contexts/Global";
+import { useThemeContext } from "@client/contexts/Theme";
 
 export const useGlobalProvider = () => {
   const [isWindowDefined, setIsWindowDefined] = useState(false);
-  const [isLoadingBackdrop, setIsLoadingBackdrop] = useState(true);
+  const { theme } = useThemeContext();
+
+  const [backdrop, setBackdrop] = useState({
+    visible: true,
+    showLoadingIndicator: true,
+  });
   const activeToastMessages: string[] = [];
 
-  const showToast = ({ message, type }: ToastProps) => {
-    const theme = document.documentElement.getAttribute(`data-theme`) || `light`;
+  const showToast = ({ message, type, preventDuplicate }: ToastProps) => {
+    if (
+      !preventDuplicate ||
+      (preventDuplicate &&
+        !activeToastMessages.some(activeToastMessage => activeToastMessage === message))
+    ) {
+      let onClose;
+      if (preventDuplicate) {
+        activeToastMessages.push(message);
+        onClose = () => activeToastMessages.splice(activeToastMessages.indexOf(message), 1);
+      }
 
-    if (!activeToastMessages.some(activeToastMessage => activeToastMessage === message)) {
-      const messageIndex = activeToastMessages.push(message);
+      activeToastMessages.push(message);
       toast(message, {
         position: `top-right`,
         theme: [`light`, `dark`].indexOf(theme) > -1 ? theme : `light`,
         type,
-        onClose: () => activeToastMessages.splice(messageIndex, 1),
+        onClose,
       });
     }
   };
 
-  const showLoadingBackdrop = () => {
-    setIsLoadingBackdrop(true);
+  const showBackdrop = ({ showLoadingIndicator }: BackdropProps) => {
+    setBackdrop({
+      visible: true,
+      showLoadingIndicator: showLoadingIndicator || false,
+    });
   };
 
-  const hideLoadingBackdrop = () => {
-    setIsLoadingBackdrop(false);
+  const hideBackdrop = () => {
+    setBackdrop({
+      visible: false,
+      showLoadingIndicator: false,
+    });
   };
 
   useEffect(() => {
     if (typeof window !== `undefined`) {
       setIsWindowDefined(true);
-      hideLoadingBackdrop();
+      hideBackdrop();
     } else {
       throw new Error(`Window is not defined.`);
     }
@@ -41,9 +61,9 @@ export const useGlobalProvider = () => {
 
   return {
     isWindowDefined,
-    isLoadingBackdrop,
+    backdrop,
     showToast,
-    showLoadingBackdrop,
-    hideLoadingBackdrop,
+    showBackdrop,
+    hideBackdrop,
   };
 };

@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import GlobalProvider from "@client/providers/Global";
+import ThemeProvider from "@client/providers/Theme";
 
 import "./globals.css";
 
@@ -23,7 +24,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <GlobalProvider>{children}</GlobalProvider>
+        <ThemeProvider>
+          <GlobalProvider>{children}</GlobalProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

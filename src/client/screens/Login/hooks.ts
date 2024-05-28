@@ -1,15 +1,16 @@
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 import { useRouter } from "next/navigation";
 
 import { type LoginRequest, type LoginResponse } from "@server/controllers/login/types";
 
-import { useGlobalContext } from "@client/contexts/Global";
+import { useThemeContext } from "@client/contexts/Theme";
 import { useRequest } from "@client/hooks/useRequest";
 import { Auth } from "@client/utils/auth";
 
 export const useLoginScreen = () => {
-  const { showToast } = useGlobalContext();
+  const { theme } = useThemeContext();
   const route = useRouter();
   const { response, errors, request } = useRequest<LoginRequest, LoginResponse>({
     url: `/api/login`,
@@ -17,7 +18,8 @@ export const useLoginScreen = () => {
       method: `POST`,
     },
     hookOptions: {
-      shouldShowLoadingBackdrop: true,
+      shouldShowBackdrop: true,
+      willHandleValidationErrors: true,
     },
   });
 
@@ -30,10 +32,19 @@ export const useLoginScreen = () => {
     const password = data.get(`password`);
 
     if (email && password) {
-      request({
-        email: email.toString(),
-        password: password.toString(),
-      });
+      toast.promise(
+        request({
+          email: email.toString(),
+          password: password.toString(),
+        }),
+        {
+          pending: `Entrando...`,
+          success: `Login efetuado com sucesso!`,
+        },
+        {
+          theme,
+        },
+      );
     }
   };
 
@@ -42,11 +53,7 @@ export const useLoginScreen = () => {
       Auth.accessToken = response.accessToken;
       Auth.refreshToken = response.refreshToken;
       Auth.user = response.user;
-      showToast({
-        message: `Login efetuado com sucesso!`,
-        type: `success`,
-      });
-      route.push(`/status`);
+      route.push(`/painel`);
     }
   }, [response]);
 

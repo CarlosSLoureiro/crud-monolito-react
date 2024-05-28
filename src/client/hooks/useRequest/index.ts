@@ -17,6 +17,7 @@ type HookParams = {
   url: string;
   options?: RequestInit;
   hookOptions?: {
+    shouldShowBackdrop?: boolean;
     shouldShowLoadingBackdrop?: boolean;
     shouldShowErrorToast?: boolean;
     willHandleValidationErrors?: boolean;
@@ -115,12 +116,13 @@ export function useRequest<RequestType = any, ResponseType = any>({
   hookOptions,
 }: HookParams) {
   const {
+    shouldShowBackdrop = false,
     shouldShowLoadingBackdrop = false,
     shouldShowErrorToast = true,
     willHandleValidationErrors = false,
   } = hookOptions || {};
 
-  const { showToast, showLoadingBackdrop, hideLoadingBackdrop } = useGlobalContext();
+  const { showToast, showBackdrop, hideBackdrop } = useGlobalContext();
   const [response, setResponse] = useState<ResponseType>();
   const [errors, setErrors] = useState<ZodFormattedError>();
   const route = useRouter();
@@ -129,8 +131,10 @@ export function useRequest<RequestType = any, ResponseType = any>({
     setErrors(undefined);
 
     try {
-      if (shouldShowLoadingBackdrop) {
-        showLoadingBackdrop();
+      if (shouldShowBackdrop || shouldShowLoadingBackdrop) {
+        showBackdrop({
+          showLoadingIndicator: shouldShowLoadingBackdrop,
+        });
       }
 
       const res = await customFetch(url, {
@@ -155,6 +159,7 @@ export function useRequest<RequestType = any, ResponseType = any>({
           showToast({
             message: error.message,
             type: `error`,
+            preventDuplicate: true,
           });
         }
 
@@ -170,8 +175,8 @@ export function useRequest<RequestType = any, ResponseType = any>({
 
       throw error;
     } finally {
-      if (shouldShowLoadingBackdrop) {
-        hideLoadingBackdrop();
+      if (shouldShowBackdrop || shouldShowLoadingBackdrop) {
+        hideBackdrop();
       }
     }
   };

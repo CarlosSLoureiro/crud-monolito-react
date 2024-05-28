@@ -11,16 +11,9 @@ import { GlobalContext } from "@client/contexts/Global";
 
 import { useGlobalProvider } from "./hooks";
 import type { GlobalProviderProps } from "./types";
-import ThemeProvider from "../Theme";
 
 const GlobalProvider: FC<GlobalProviderProps> = ({ children }: GlobalProviderProps) => {
-  const {
-    isWindowDefined,
-    isLoadingBackdrop,
-    showToast,
-    showLoadingBackdrop,
-    hideLoadingBackdrop,
-  } = useGlobalProvider();
+  const { isWindowDefined, backdrop, showToast, showBackdrop, hideBackdrop } = useGlobalProvider();
 
   return (
     <>
@@ -33,19 +26,17 @@ const GlobalProvider: FC<GlobalProviderProps> = ({ children }: GlobalProviderPro
         <GlobalContext.Provider
           value={{
             showToast,
-            showLoadingBackdrop,
-            hideLoadingBackdrop,
+            showBackdrop,
+            hideBackdrop,
           }}
         >
-          <ThemeProvider>
-            <Backdrop
-              open={isLoadingBackdrop}
-              sx={{ color: `#fff`, zIndex: theme => theme.zIndex.drawer + 1 }}
-            >
-              <CircularProgress color="inherit" />
-            </Backdrop>
-            {children}
-          </ThemeProvider>
+          <Backdrop
+            open={backdrop.visible}
+            sx={{ color: `#fff`, zIndex: theme => theme.zIndex.drawer + 2 }}
+          >
+            {backdrop.showLoadingIndicator && <CircularProgress color="inherit" />}
+          </Backdrop>
+          {children}
         </GlobalContext.Provider>
       )}
     </>

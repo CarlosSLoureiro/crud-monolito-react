@@ -1,3 +1,5 @@
+"use client";
+
 import { type FC } from "react";
 
 import CssBaseline from "@mui/material/CssBaseline";

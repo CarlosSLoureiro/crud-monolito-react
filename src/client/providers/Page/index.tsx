@@ -1,3 +1,5 @@
+"use client";
+
 import { type FC, useEffect, useState } from "react";
 
 import { useRouter } from "next/navigation";
@@ -21,6 +23,7 @@ const PageProvider: FC<PageProviderProps> = (props: PageProviderProps) => {
       showToast({
         message: `Faça o login para continuar`,
         type: `warning`,
+        preventDuplicate: true,
       });
       router.push(`/login`);
     } else if (mustBeUnauthenticated && Auth.isAuthenticated) {

@@ -1,25 +1,24 @@
-import { useEffect, useState } from "react";
+import { Fragment } from "react";
 import { toast } from "react-toastify";
 
 import { useRouter } from "next/navigation";
 
-import { type StatusResponse } from "@server/controllers/status/types";
+import LogoutIcon from "@mui/icons-material/Logout";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+
+import type { LogoutResponse } from "@server/controllers/logout/types";
 
 import { useThemeContext } from "@client/contexts/Theme";
 import { useRequest } from "@client/hooks/useRequest";
 import { Auth } from "@client/utils/auth";
 
-export const useStatusScreen = () => {
-  const router = useRouter();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+export const LogoutButton = () => {
   const { theme } = useThemeContext();
-  const { response, request } = useRequest<any, StatusResponse>({
-    url: `/api/status`,
-    hookOptions: {
-      shouldShowLoadingBackdrop: true,
-    },
-  });
-  const { request: requestLogout } = useRequest<any, any>({
+  const router = useRouter();
+
+  const { request } = useRequest<any, LogoutResponse>({
     url: `/api/logout`,
     options: {
       method: `POST`,
@@ -31,19 +30,9 @@ export const useStatusScreen = () => {
     },
   });
 
-  const handleOpen = async () => {
-    const get = async () => {
-      request();
-    };
-
-    const [resJson, resJson2] = await Promise.all([get(), get()]);
-
-    console.log(resJson, resJson2);
-  };
-
   const handleLogout = () => {
     toast.promise(
-      requestLogout(),
+      request(),
       {
         pending: `Saindo...`,
         success: {
@@ -67,21 +56,14 @@ export const useStatusScreen = () => {
     );
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-  useEffect(() => {
-    if (response) {
-      setIsModalOpen(true);
-    }
-  }, [response]);
-
-  return {
-    isModalOpen,
-    response,
-    handleOpen,
-    handleLogout,
-    handleCloseModal,
-  };
+  return (
+    <Fragment>
+      <ListItemButton onClick={handleLogout}>
+        <ListItemIcon>
+          <LogoutIcon />
+        </ListItemIcon>
+        <ListItemText primary="Sair" />
+      </ListItemButton>
+    </Fragment>
+  );
 };
