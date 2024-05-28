@@ -6,6 +6,8 @@ import * as Sentry from "@sentry/nextjs";
 import ErrorPage from "next/error";
 import { StatusCodes } from "http-status-codes";
 
+import { AuthError } from "@client/hooks/useRequest";
+
 type GlobalErrorProps = {
   error: Error & { digest?: string };
   reset: () => void;
@@ -13,7 +15,9 @@ type GlobalErrorProps = {
 
 export default function GlobalError({ error }: GlobalErrorProps) {
   useEffect(() => {
-    Sentry.captureException(error);
+    if (!(error instanceof AuthError)) {
+      Sentry.captureException(error);
+    }
   }, [error]);
 
   return (

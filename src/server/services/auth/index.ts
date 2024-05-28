@@ -98,6 +98,10 @@ export abstract class AuthService {
               },
             );
 
+            UserSessionRepository.update(sessionHash, {
+              updatedAt: new Date(),
+            });
+
             return {
               accessToken,
               refreshToken: newRefreshToken,
@@ -140,5 +144,9 @@ export abstract class AuthService {
         name: user.name,
       },
     };
+  }
+
+  static async logout({ session }: Pick<AuthenticatedUser, `session`>) {
+    await UserSessionRepository.revoke(session);
   }
 }

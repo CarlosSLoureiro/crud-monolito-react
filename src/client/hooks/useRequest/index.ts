@@ -4,7 +4,10 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { StatusCodes } from "http-status-codes";
 
-import type { RefreshTokenResponse } from "@server/controllers/token/refresh/types";
+import type {
+  RefreshTokenRequest,
+  RefreshTokenResponse,
+} from "@server/controllers/token/refresh/types";
 import type { ZodFormattedError } from "@server/utils/validator/types";
 
 import { useGlobalContext } from "@client/contexts/Global";
@@ -20,7 +23,7 @@ type HookParams = {
   };
 };
 
-class AuthError extends Error {
+export class AuthError extends Error {
   constructor(message: string) {
     super(message);
   }
@@ -33,7 +36,7 @@ async function doRefreshTokenRequest() {
     method: `POST`,
     body: JSON.stringify({
       token: Auth.refreshToken,
-    }),
+    } satisfies RefreshTokenRequest),
   });
 
   const response = await request.json();

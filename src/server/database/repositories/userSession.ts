@@ -26,4 +26,8 @@ export abstract class UserSessionRepository {
   static async update(session: string, data: Partial<UserSession>) {
     return await userSessionRepository.update({ session }, data);
   }
+
+  static async revoke(session: string) {
+    return await userSessionRepository.update({ session }, { revoked: true });
+  }
 }
