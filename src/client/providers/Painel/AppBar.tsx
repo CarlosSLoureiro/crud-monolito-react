@@ -22,5 +22,9 @@ export const AppBar = styled(MuiAppBar, {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    // Add the following media query to set width to 100% on mobile screens
+    "@media (max-width: 600px)": {
+      width: `0`,
+    },
   }),
 }));

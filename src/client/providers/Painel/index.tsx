@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useState } from "react";
+import { type ReactNode, useLayoutEffect, useState } from "react";
 
 import { useRouter } from "next/navigation";
 
@@ -34,15 +34,22 @@ export default function PainelProvider({
 }>) {
   const router = useRouter();
 
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
+  useLayoutEffect(() => {
+    if (window.innerWidth > 768) {
+      setOpen(true);
+    }
+  }, []);
+
   return (
     <Box sx={{ display: `flex` }}>
       <CssBaseline />
-      <AppBar open={open} position="absolute">
+      <AppBar open={open} position="fixed">
         <Toolbar
           sx={{
             pr: `24px`, // keep right padding when drawer closed
