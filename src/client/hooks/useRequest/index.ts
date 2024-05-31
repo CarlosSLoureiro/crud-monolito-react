@@ -124,7 +124,7 @@ export function useRequest<RequestType = any, ResponseType = any>({
 
   const { showToast, showBackdrop, hideBackdrop } = useGlobalContext();
   const [response, setResponse] = useState<ResponseType>();
-  const [errors, setErrors] = useState<ZodFormattedError>();
+  const [errors, setErrors] = useState<ZodFormattedError<RequestType>>();
   const route = useRouter();
 
   const request = async (data?: RequestType): Promise<ResponseType> => {
