@@ -38,12 +38,15 @@ export default function PainelProvider({
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = () => {
-    setOpen(!open);
+    const value = !open;
+    window.localStorage.setItem(`drawerOpen`, value.toString());
+    setOpen(value);
   };
 
   useLayoutEffect(() => {
     if (window.innerWidth > 768) {
-      setOpen(true);
+      const value = window.localStorage.getItem(`drawerOpen`) === `true`;
+      setOpen(value);
     }
   }, []);
 
