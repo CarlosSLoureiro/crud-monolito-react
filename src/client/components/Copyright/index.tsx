@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 
 export default function Copyright(props: any) {
   return (
-    <Typography align="center" color="text.secondary" variant="body2" {...props}>
+    <Typography align="center" color="text.secondary" paddingTop={2} variant="body2" {...props}>
       {`Copyright © `}
       <Link color="inherit" href={window.location.origin}>
         Eu Gestor

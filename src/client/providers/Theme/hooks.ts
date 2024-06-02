@@ -4,23 +4,31 @@ import { createTheme, type PaletteMode } from "@mui/material";
 
 export function useThemeProvider() {
   const userSystemDark = window.matchMedia(`(prefers-color-scheme: dark)`);
-  const userPrefTheme = window.localStorage.getItem(`theme`);
+  const [userPrefTheme, setUserPrefTheme] = useState(
+    window.localStorage.getItem(`theme`) || `auto`,
+  );
 
   const isUserSystemDark = userSystemDark.matches;
   const isUserPrefDark = userPrefTheme === `dark`;
 
-  const isDark =
-    userPrefTheme !== null && userPrefTheme !== `auto` ? isUserPrefDark : isUserSystemDark;
+  const isDark = userPrefTheme !== `auto` ? isUserPrefDark : isUserSystemDark;
 
   const [theme, setTheme] = useState<PaletteMode>(isDark ? `dark` : `light`);
 
-  userSystemDark.addEventListener(`change`, e => {
-    if (e.matches) {
-      setTheme(`dark`);
-    } else {
-      setTheme(`light`);
+  const onChandeSystemTheme = (e: MediaQueryListEvent) => {
+    const prefTheme = window.localStorage.getItem(`theme`) || `auto`;
+    if (prefTheme === `auto`) {
+      setTheme(e.matches ? `dark` : `light`);
     }
-  });
+  };
+
+  useEffect(() => {
+    userSystemDark.addEventListener(`change`, onChandeSystemTheme);
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem(`theme`, userPrefTheme);
+  }, [userPrefTheme]);
 
   useEffect(() => {
     if (theme === `dark`) {
@@ -30,9 +38,22 @@ export function useThemeProvider() {
     }
   }, [theme]);
 
-  const toggleTheme = () => {
+  const toggleTheme = (params?: { auto?: boolean }) => {
+    const { auto } = params || {};
+
+    if (auto) {
+      setUserPrefTheme(`auto`);
+      const userSystemDark = window.matchMedia(`(prefers-color-scheme: dark)`);
+      const isUserSystemDark = userSystemDark.matches;
+      setTheme(isUserSystemDark ? `dark` : `light`);
+      return;
+    } else if (userPrefTheme === `auto`) {
+      setUserPrefTheme(theme);
+      return;
+    }
+
     const newTheme = theme === `light` ? `dark` : `light`;
-    window.localStorage.setItem(`theme`, newTheme);
+    setUserPrefTheme(newTheme);
     setTheme(newTheme);
   };
 
@@ -42,5 +63,5 @@ export function useThemeProvider() {
     },
   });
 
-  return { theme, darkTheme, toggleTheme };
+  return { userPrefTheme, theme, darkTheme, toggleTheme };
 }

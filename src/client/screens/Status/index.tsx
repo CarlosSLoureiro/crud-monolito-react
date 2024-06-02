@@ -10,8 +10,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import { type TransitionProps } from "@mui/material/transitions";
 
-import ColorSchemeSwitch from "@client/components/ColorSchemeSwitch";
-
 import { useStatusScreen } from "./hooks";
 import { Container, jsonPrettyStyles } from "./styles";
 
@@ -54,7 +52,6 @@ export default function StatusScreen() {
           <Button onClick={handleCloseModal}>Fechar</Button>
         </DialogActions>
       </Dialog>
-      <ColorSchemeSwitch />
     </Container>
   );
 }

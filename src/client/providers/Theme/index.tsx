@@ -11,9 +11,9 @@ import { useThemeProvider } from "./hooks";
 import type { ThemeProviderProps } from "./types";
 
 const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
-  const { theme, darkTheme, toggleTheme } = useThemeProvider();
+  const { userPrefTheme, theme, darkTheme, toggleTheme } = useThemeProvider();
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ userPrefTheme, theme, toggleTheme }}>
       <MUIThemeProvider theme={darkTheme}>
         <CssBaseline />
         {children}

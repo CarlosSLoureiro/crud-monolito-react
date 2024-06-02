@@ -11,6 +11,7 @@ import LayersIcon from "@mui/icons-material/Layers";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import PeopleIcon from "@mui/icons-material/People";
+import SettingsIcon from "@mui/icons-material/Settings";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Badge from "@mui/material/Badge";
 import Box from "@mui/material/Box";
@@ -121,6 +122,12 @@ export default function PainelProvider({
             isDrawerOpen={open}
             label="Integrações"
             onClick={() => router.push(`/integracoes`)}
+          />
+          <Button
+            icon={<SettingsIcon />}
+            isDrawerOpen={open}
+            label="Configurações"
+            onClick={() => router.push(`/painel/configuracoes`)}
           />
           <Divider sx={{ my: 1 }} />
           <LogoutButton isDrawerOpen={open} />

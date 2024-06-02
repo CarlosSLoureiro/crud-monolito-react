@@ -17,6 +17,12 @@ export abstract class UserRepository {
       where: { email },
     });
 
+    /*
+    const query = userRepository.createQueryBuilder(`user`);
+    query.where(`user.emai = :email`, { email });
+    query.leftJoinAndSelect(`user.sessions`, `session`);
+    const user = await query.getOne();
+    */
     return user;
   }
 }

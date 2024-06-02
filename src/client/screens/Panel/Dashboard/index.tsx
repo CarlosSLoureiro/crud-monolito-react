@@ -10,7 +10,7 @@ import Chart from "./Chart";
 import Deposits from "./Deposits";
 import Orders from "./Orders";
 
-export default function PainelScreen() {
+export default function PanelDashboardScreen() {
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Grid container spacing={3}>
@@ -41,6 +41,11 @@ export default function PainelScreen() {
           </Paper>
         </Grid>
         {/* Recent Orders */}
+        <Grid item xs={12}>
+          <Paper sx={{ p: 2, display: `flex`, flexDirection: `column` }}>
+            <Orders />
+          </Paper>
+        </Grid>
         <Grid item xs={12}>
           <Paper sx={{ p: 2, display: `flex`, flexDirection: `column` }}>
             <Orders />

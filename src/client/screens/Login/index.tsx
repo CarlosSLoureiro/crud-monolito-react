@@ -11,7 +11,6 @@ import Typography from "@mui/material/Typography";
 
 import Copyright from "@client/components/Copyright";
 import Input from "@client/components/Input";
-import { Auth } from "@client/utils/auth";
 
 import { useLoginScreen } from "./hooks";
 
@@ -32,7 +31,7 @@ export default function LoginScreen() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Entrar - {Auth.user?.name}
+          Entrar
         </Typography>
         <Box component="form" onSubmit={handleLogin} sx={{ mt: 1 }}>
           <Input

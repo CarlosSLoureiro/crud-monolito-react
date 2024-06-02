@@ -1,7 +1,7 @@
 "use client";
 
-import DashboardScreen from "@client/screens/Painel";
+import PanelDashboardScreen from "@client/screens/Panel/Dashboard";
 
 export default function Page() {
-  return <DashboardScreen />;
+  return <PanelDashboardScreen />;
 }
