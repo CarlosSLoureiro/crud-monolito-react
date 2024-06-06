@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 
 import { createTheme, type PaletteMode } from "@mui/material";
 
+import type { ToggleThemeParams } from "./types";
+
 export function useThemeProvider() {
   const userSystemDark = window.matchMedia(`(prefers-color-scheme: dark)`);
   const [userPrefTheme, setUserPrefTheme] = useState(
@@ -38,10 +40,15 @@ export function useThemeProvider() {
     }
   }, [theme]);
 
-  const toggleTheme = (params?: { auto?: boolean }) => {
-    const { auto } = params || {};
+  const toggleTheme = (params?: ToggleThemeParams) => {
+    const { auto, force } = params || {};
 
-    if (auto) {
+    if (force) {
+      const newTheme = theme === `light` ? `dark` : `light`;
+      setUserPrefTheme(newTheme);
+      setTheme(newTheme);
+      return;
+    } else if (auto) {
       setUserPrefTheme(`auto`);
       const userSystemDark = window.matchMedia(`(prefers-color-scheme: dark)`);
       const isUserSystemDark = userSystemDark.matches;

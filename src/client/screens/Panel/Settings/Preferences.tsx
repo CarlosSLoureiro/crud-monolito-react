@@ -1,4 +1,4 @@
-import { styled, Typography, useTheme } from "@mui/material";
+import { styled, Typography } from "@mui/material";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup, { type FormGroupProps } from "@mui/material/FormGroup";
 import Grid from "@mui/material/Grid";
@@ -14,8 +14,7 @@ const PrefFormGroup = styled(FormGroup)<FormGroupProps>(({ theme }) => ({
 }));
 
 export default function PreferencesTab() {
-  const { userPrefTheme, theme, toggleTheme } = useThemeContext();
-  const scheme = useTheme();
+  const { userPrefTheme, toggleTheme } = useThemeContext();
 
   const handlePrefThemeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
@@ -41,7 +40,7 @@ export default function PreferencesTab() {
             <FormControlLabel
               control={
                 <Switch
-                  defaultChecked={userPrefTheme === `auto`}
+                  checked={userPrefTheme === `auto`}
                   name="gilad"
                   onChange={handlePrefThemeChange}
                 />
@@ -50,29 +49,6 @@ export default function PreferencesTab() {
             />
           </PrefFormGroup>
         </Grid>
-        {userPrefTheme !== `auto` && (
-          <Grid item md={12} xs={6}>
-            <PrefFormGroup
-              style={{
-                borderLeft: `2px solid ${scheme.palette.divider}`,
-                paddingLeft: `16px`,
-              }}
-            >
-              <Typography component="h5" fontWeight="bold" variant="subtitle1">
-                Modo Escuro
-              </Typography>
-              <Typography component="p" variant="body2">
-                Ative para ativar o modo escuro ou desative para o modo claro.
-              </Typography>
-              <FormControlLabel
-                control={
-                  <Switch checked={theme === `dark`} name="gilad" onChange={() => toggleTheme()} />
-                }
-                label={theme === `dark` ? `Ativado` : `Desativado`}
-              />
-            </PrefFormGroup>
-          </Grid>
-        )}
       </Grid>
     </TabContent>
   );

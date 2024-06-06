@@ -5,6 +5,7 @@ import { type ReactNode, useLayoutEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import BarChartIcon from "@mui/icons-material/BarChart";
+import Brightness2Icon from "@mui/icons-material/Brightness2";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import LayersIcon from "@mui/icons-material/Layers";
@@ -13,6 +14,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import PeopleIcon from "@mui/icons-material/People";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import Badge from "@mui/material/Badge";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -20,7 +22,11 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import Toolbar from "@mui/material/Toolbar";
+import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
+import Zoom from "@mui/material/Zoom";
+
+import { useThemeContext } from "@client/contexts/Theme";
 
 import { AppBar } from "./AppBar";
 import { Drawer } from "./Drawer";
@@ -34,6 +40,7 @@ export default function PainelProvider({
   children: ReactNode;
 }>) {
   const router = useRouter();
+  const { theme, toggleTheme } = useThemeContext();
 
   const [open, setOpen] = useState(false);
 
@@ -74,6 +81,19 @@ export default function PainelProvider({
           <Typography color="inherit" component="h1" noWrap sx={{ flexGrow: 1 }} variant="h6">
             Painel
           </Typography>
+          <Tooltip
+            arrow
+            disableInteractive
+            placement="bottom"
+            title={theme === `light` ? `Ativar tema escuro` : `Ativar tema claro`}
+            TransitionComponent={Zoom}
+          >
+            <IconButton color="inherit" onClick={() => toggleTheme({ force: true })}>
+              <Badge color="secondary">
+                {theme === `light` ? <Brightness2Icon /> : <WbSunnyIcon />}
+              </Badge>
+            </IconButton>
+          </Tooltip>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
               <NotificationsIcon />
