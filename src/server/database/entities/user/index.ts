@@ -7,7 +7,7 @@ import {
   type Relation,
 } from "typeorm";
 
-import { UserSession } from ".";
+import { UserSession } from "..";
 
 @Entity(`users`)
 export class UserEntity {

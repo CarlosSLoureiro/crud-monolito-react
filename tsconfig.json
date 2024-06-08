@@ -16,14 +16,17 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "strictPropertyInitialization": false,
-    "verbatimModuleSyntax": true,
+    "verbatimModuleSyntax": false,
     "plugins": [
       {
         "name": "next"
       }
     ],
     "paths": {
-      "@*": ["./src/*"]
+      "@client": ["./src/client"],
+      "@client/*": ["./src/client/*"],
+      "@server": ["./src/server"],
+      "@server/*": ["./src/server/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

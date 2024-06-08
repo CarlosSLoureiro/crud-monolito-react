@@ -1,5 +1,5 @@
-import { type User, UserSession } from "../entities";
-import { Database } from "..";
+import { Database } from "@server/database";
+import { type User, UserSession } from "@server/database/entities";
 
 const userSessionRepository = Database.getRepository(UserSession);
 

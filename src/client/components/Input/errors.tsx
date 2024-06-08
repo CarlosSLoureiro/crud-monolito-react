@@ -8,8 +8,8 @@ export default function Errors(props: { errors?: string[] }) {
   return (
     props.errors?.length && (
       <>
-        {props.errors.map(err => (
-          <>
+        {props.errors.map((err, index) => (
+          <div key={`error-${index}`}>
             <Typography
               color={theme === `light` ? `#d32f2f` : `#f44336`}
               gutterBottom
@@ -17,7 +17,7 @@ export default function Errors(props: { errors?: string[] }) {
             >
               {err}
             </Typography>
-          </>
+          </div>
         ))}
       </>
     )
