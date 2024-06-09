@@ -1,5 +1,5 @@
 import * as Sentry from "@sentry/nextjs";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { StatusCodes } from "http-status-codes";
 
 import { Server } from "@server";
@@ -116,6 +116,10 @@ describe(`Server`, () => {
 
       // Mock
       const captureException = jest.spyOn(Sentry, `captureException`);
+      const consoleError = jest.spyOn(console, `error`);
+      consoleError.mockImplementation(() => {
+        // remove console error from terminal
+      });
 
       // Act
       const response = await handle(request);
@@ -125,6 +129,7 @@ describe(`Server`, () => {
 
       // Assert
       expect(handler).toHaveBeenCalledWith(request.clone());
+      expect(consoleError).toHaveBeenCalledWith(error);
       expect(captureException).not.toHaveBeenCalled();
       expect(responseJson).toEqual({ message: error.message });
     });
