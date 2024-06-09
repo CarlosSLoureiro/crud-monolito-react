@@ -113,7 +113,6 @@ export abstract class AuthService {
       if (err instanceof TokenExpiredError) {
         throw new GenericError(`Token de atualização expirado`, StatusCodes.UNAUTHORIZED);
       }
-      throw new GenericError(`Token de atualização inváido`, StatusCodes.UNAUTHORIZED);
     }
 
     throw new GenericError(`Token de atualização inválido`, StatusCodes.UNAUTHORIZED);
