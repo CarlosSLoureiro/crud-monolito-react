@@ -40,6 +40,7 @@ describe(`AuthService`, () => {
         expect(error).toHaveProperty(`message`, `Usuário não encontrado`);
       }
     });
+
     it(`should throw an error if the password is incorrect`, async () => {
       // Arrange
       const user = new UserFactory();
@@ -64,6 +65,7 @@ describe(`AuthService`, () => {
         expect(error).toHaveProperty(`message`, `Senha inválida`);
       }
     });
+
     it(`should login with success`, async () => {
       // Arrange
       const user = new UserFactory();

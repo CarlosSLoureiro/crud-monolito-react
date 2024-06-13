@@ -7,7 +7,7 @@ export class UserSessionFactory implements UserSession {
   session = faker.string.uuid();
   userId = faker.number.int();
   userAgent = faker.internet.userAgent();
-  revoked = faker.datatype.boolean();
+  revoked = false;
   ip = faker.internet.ip();
   updatedAt = new Date();
   createdAt = new Date();
