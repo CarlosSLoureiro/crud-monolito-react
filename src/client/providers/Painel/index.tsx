@@ -153,6 +153,13 @@ export default function PainelProvider({
         <Divider />
         <List component="nav">
           <Button
+            icon={<HomeIcon />}
+            isDrawerOpen={open}
+            label="Página Inicial"
+            onClick={() => router.push(`/`)}
+          />
+          <Divider sx={{ my: 1 }} />
+          <Button
             icon={<DashboardIcon />}
             isDrawerOpen={open}
             label="Dashboard"
@@ -189,12 +196,6 @@ export default function PainelProvider({
             onClick={() => router.push(`/painel/configuracoes`)}
           />
           <Divider sx={{ my: 1 }} />
-          <Button
-            icon={<HomeIcon />}
-            isDrawerOpen={open}
-            label="Página Inicial"
-            onClick={() => router.push(`/`)}
-          />
           <LogoutButton isDrawerOpen={open} />
         </List>
       </Drawer>
