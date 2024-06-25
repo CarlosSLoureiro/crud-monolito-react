@@ -9,9 +9,11 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 import { type TransitionProps } from "@mui/material/transitions";
+import Typography from "@mui/material/Typography";
 
 import { useStatusScreen } from "./hooks";
 import { Container, jsonPrettyStyles } from "./styles";
+import { type StatusPageProps } from "./types";
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -22,12 +24,18 @@ const Transition = forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function StatusScreen() {
-  const { isModalOpen, response, handleOpen, handleBack, handleCloseModal } = useStatusScreen();
+export default function StatusScreen(props: StatusPageProps) {
+  const { isModalOpen, response, handleOpen, handleBack, handleCloseModal } =
+    useStatusScreen(props);
   return (
     <Container>
+      <Typography component="h2" variant="h5">
+        {props?.isWithAuthMiddleware
+          ? `Ao clicar no botão abaixo, será feita 2 requisições simultâneas para a API para testar o fluxo de refresh token.`
+          : `Ao clicar no botão abaixo, será feita uma requisição para a API.`}
+      </Typography>
       <Button onClick={handleOpen} variant="contained">
-        Conferir Status
+        Conferir Status da API
       </Button>
       <Button onClick={handleBack} variant="contained">
         Voltar

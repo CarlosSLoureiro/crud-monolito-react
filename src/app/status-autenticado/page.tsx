@@ -5,8 +5,8 @@ import StatusScreen from "@client/screens/Status";
 
 export default function Page() {
   return (
-    <PageProvider>
-      <StatusScreen />
+    <PageProvider mustBeAuthenticated>
+      <StatusScreen isWithAuthMiddleware />
     </PageProvider>
   );
 }

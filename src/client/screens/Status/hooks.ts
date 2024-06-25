@@ -6,25 +6,32 @@ import { type StatusResponse } from "@server/controllers/status/types";
 
 import { useRequest } from "@client/hooks/useRequest";
 
-export const useStatusScreen = () => {
+import { type StatusPageProps } from "./types";
+
+export const useStatusScreen = (props: StatusPageProps) => {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { response, request } = useRequest<any, StatusResponse>({
-    url: `/api/status`,
+    url: props?.isWithAuthMiddleware ? `/api/status-autenticado` : `/api/status`,
     hookOptions: {
       shouldShowLoadingBackdrop: true,
     },
   });
 
   const handleOpen = async () => {
-    const get = async () => {
+    if (props?.isWithAuthMiddleware) {
+      const get = async () => {
+        request();
+      };
+
+      // Force simultaneous requests to test the refresh token flow
+      const [resJson, resJson2] = await Promise.all([get(), get()]);
+
+      // eslint-disable-next-line no-console
+      console.log(resJson, resJson2);
+    } else {
       request();
-    };
-
-    // Force simultaneous requests to test the refresh token flow
-    const [resJson, resJson2] = await Promise.all([get(), get()]);
-
-    console.log(resJson, resJson2);
+    }
   };
 
   const handleBack = () => {
