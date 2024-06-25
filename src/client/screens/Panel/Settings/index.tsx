@@ -11,6 +11,7 @@ import Tab from "@mui/material/Tab";
 
 import Copyright from "@client/components/Copyright";
 
+import PasswordScreenTab from "./Password";
 import PreferencesTab from "./Preferences";
 import ProfileScreenTab from "./Profile";
 
@@ -24,8 +25,7 @@ export function LabTabs() {
   const tabs = [
     { label: `Preferências`, children: <PreferencesTab /> },
     { label: `Conta`, children: <ProfileScreenTab /> },
-    { label: `Senha`, children: <ProfileScreenTab /> },
-    { label: `Assinatura`, children: <ProfileScreenTab /> },
+    { label: `Senha`, children: <PasswordScreenTab /> },
   ];
 
   return (
