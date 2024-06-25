@@ -1,6 +1,11 @@
 {
-  "name": "app-gestao-react",
+  "name": "crud-monolito-react",
   "version": "0.1.0",
+  "author": {
+    "name": "Carlos Loureiro",
+    "email": "loureiro.s.carlos@gmai.com",
+    "url": "https://www.linkedin.com/in/carlos-s-loureiro/"
+  },
   "private": true,
   "scripts": {
     "dev": "next dev",

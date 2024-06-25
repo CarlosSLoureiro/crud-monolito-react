@@ -6,7 +6,7 @@ describe(`Copyright`, () => {
   it(`renders the copyright with application name`, () => {
     render(<Copyright />);
 
-    const element = screen.getByText(`Eu Gestor`);
+    const element = screen.getByText(`Carlos Loureiro`);
 
     expect(element).toBeInTheDocument();
   });
