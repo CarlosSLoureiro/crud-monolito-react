@@ -27,7 +27,9 @@ export default function HomeScreen() {
             <>Clique aqui para entrar ou se cadastrar no sistema. 🔑</>
           )}
         </p>
-        <p onClick={() => route.push(Auth.user ? `/status-autenticado` : `/status`)}>
+        <p
+          onClick={() => route.push(Auth.user ? `/status-autenticado` : `/status-nao-autenticado`)}
+        >
           Clique aqui para conferir status da API{` `}
           <em>({Auth.user ? `autenticado` : `não autenticado`})</em> 🛠️
         </p>

@@ -12,7 +12,7 @@ export const useStatusScreen = (props: StatusPageProps) => {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { response, request } = useRequest<any, StatusResponse>({
-    url: props?.isWithAuthMiddleware ? `/api/status-autenticado` : `/api/status`,
+    url: props?.isWithAuthMiddleware ? `/api/status-autenticado` : `/api/status-nao-autenticado`,
     hookOptions: {
       shouldShowLoadingBackdrop: true,
     },
