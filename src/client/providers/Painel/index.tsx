@@ -26,6 +26,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import Zoom from "@mui/material/Zoom";
 
+import { useGlobalContext } from "@client/contexts/Global";
 import { useThemeContext } from "@client/contexts/Theme";
 
 import { AppBar } from "./AppBar";
@@ -41,6 +42,7 @@ export default function PainelProvider({
 }>) {
   const router = useRouter();
   const { theme, toggleTheme } = useThemeContext();
+  const { showToast } = useGlobalContext();
 
   const [open, setOpen] = useState(false);
 
@@ -48,6 +50,10 @@ export default function PainelProvider({
     const value = !open;
     window.localStorage.setItem(`drawerOpen`, value.toString());
     setOpen(value);
+  };
+
+  const handlePageUnavailableClick = (label: string) => {
+    showToast({ message: `A página de ${label} está em construção`, type: `warning` });
   };
 
   useLayoutEffect(() => {
@@ -66,18 +72,26 @@ export default function PainelProvider({
             pr: `24px`, // keep right padding when drawer closed
           }}
         >
-          <IconButton
-            aria-label="open drawer"
-            color="inherit"
-            edge="start"
-            onClick={toggleDrawer}
-            sx={{
-              marginRight: `36px`,
-              ...(open && { display: `none` }),
-            }}
+          <Tooltip
+            arrow
+            disableInteractive
+            placement="bottom"
+            title={`Abrir Menu`}
+            TransitionComponent={Zoom}
           >
-            <MenuIcon />
-          </IconButton>
+            <IconButton
+              aria-label="open drawer"
+              color="inherit"
+              edge="start"
+              onClick={toggleDrawer}
+              sx={{
+                marginRight: `36px`,
+                ...(open && { display: `none` }),
+              }}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Tooltip>
           <Typography color="inherit" component="h1" noWrap sx={{ flexGrow: 1 }} variant="h6">
             Painel
           </Typography>
@@ -94,11 +108,24 @@ export default function PainelProvider({
               </Badge>
             </IconButton>
           </Tooltip>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+          <Tooltip
+            arrow
+            disableInteractive
+            placement="bottom"
+            title={`Notificações`}
+            TransitionComponent={Zoom}
+          >
+            <IconButton
+              color="inherit"
+              onClick={() => {
+                showToast({ message: `Não há notificações`, type: `info` });
+              }}
+            >
+              <Badge badgeContent={4} color="secondary">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+          </Tooltip>
         </Toolbar>
       </AppBar>
       <Drawer open={open} variant="permanent">
@@ -110,9 +137,17 @@ export default function PainelProvider({
             px: [1],
           }}
         >
-          <IconButton onClick={toggleDrawer}>
-            <ChevronLeftIcon />
-          </IconButton>
+          <Tooltip
+            arrow
+            disableInteractive
+            placement="bottom"
+            title={`Fechar Menu`}
+            TransitionComponent={Zoom}
+          >
+            <IconButton onClick={toggleDrawer}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </Tooltip>
         </Toolbar>
         <Divider />
         <List component="nav">
@@ -126,25 +161,25 @@ export default function PainelProvider({
             icon={<ShoppingCartIcon />}
             isDrawerOpen={open}
             label="Pedidos"
-            onClick={() => router.push(`/pedidos`)}
+            onClick={() => handlePageUnavailableClick(`pedidos`)}
           />
           <Button
             icon={<PeopleIcon />}
             isDrawerOpen={open}
             label="Clientes"
-            onClick={() => router.push(`/clientes`)}
+            onClick={() => handlePageUnavailableClick(`clientes`)}
           />
           <Button
             icon={<BarChartIcon />}
             isDrawerOpen={open}
             label="Relatórios"
-            onClick={() => router.push(`/relatorios`)}
+            onClick={() => handlePageUnavailableClick(`relatórios`)}
           />
           <Button
             icon={<LayersIcon />}
             isDrawerOpen={open}
             label="Integrações"
-            onClick={() => router.push(`/integracoes`)}
+            onClick={() => handlePageUnavailableClick(`integrações`)}
           />
           <Button
             icon={<SettingsIcon />}
