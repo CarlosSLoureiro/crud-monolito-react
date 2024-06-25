@@ -22,14 +22,17 @@ export default function HomeScreen() {
         </p>
         <p onClick={() => route.push(`/painel`)}>
           {Auth.user ? (
-            <>Clique aqui para acessar o painel.</>
+            <>Clique aqui para acessar o painel. 🔑</>
           ) : (
-            <>Clique aqui para entrar ou se cadastrar.</>
+            <>Clique aqui para entrar ou se cadastrar no sistema. 🔑</>
           )}
         </p>
         <p onClick={() => route.push(Auth.user ? `/status-autenticado` : `/status`)}>
-          Cliquue aqui para conferir status da API{` `}
-          <em>({Auth.user ? `autenticado` : `não autenticado`})</em>
+          Clique aqui para conferir status da API{` `}
+          <em>({Auth.user ? `autenticado` : `não autenticado`})</em> 🛠️
+        </p>
+        <p onClick={() => route.push(`https://www.linkedin.com/in/carlos-s-loureiro/`)}>
+          Me dê deu feedback no <b>LinkedIn</b> 😉
         </p>
         <div>
           <a
