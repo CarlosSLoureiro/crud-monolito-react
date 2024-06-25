@@ -29,10 +29,21 @@ export default function StatusScreen(props: StatusPageProps) {
     useStatusScreen(props);
   return (
     <Container>
-      <Typography component="h2" variant="h5">
-        {props?.isWithAuthMiddleware
-          ? `Ao clicar no botão abaixo, será feita 2 requisições simultâneas para a API para testar o fluxo de refresh token.`
-          : `Ao clicar no botão abaixo, será feita uma requisição para a API.`}
+      <Typography component="h2" textAlign="center" variant="h5">
+        {props?.isWithAuthMiddleware ? (
+          <>
+            Ao clicar no botão abaixo, será feita 2 requisições simultâneas para a API para testar o
+            fluxo de refresh tokens.
+            <br />
+            Vale ressaltar que o access token está configurado para expirar em 15 minutos.{` `}
+            <em>(src/server/services/auth/index.ts:20)</em>
+          </>
+        ) : (
+          <>
+            Ao clicar no botão abaixo, será feita uma requisição para a API.
+            <br />O resultado esperado é o horário do banco de dados.
+          </>
+        )}
       </Typography>
       <Button onClick={handleOpen} variant="contained">
         Conferir Status da API

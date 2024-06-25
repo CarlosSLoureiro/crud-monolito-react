@@ -8,6 +8,7 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 import Brightness2Icon from "@mui/icons-material/Brightness2";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import DashboardIcon from "@mui/icons-material/Dashboard";
+import HomeIcon from "@mui/icons-material/Home";
 import LayersIcon from "@mui/icons-material/Layers";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -188,6 +189,12 @@ export default function PainelProvider({
             onClick={() => router.push(`/painel/configuracoes`)}
           />
           <Divider sx={{ my: 1 }} />
+          <Button
+            icon={<HomeIcon />}
+            isDrawerOpen={open}
+            label="Página Inicial"
+            onClick={() => router.push(`/`)}
+          />
           <LogoutButton isDrawerOpen={open} />
         </List>
       </Drawer>

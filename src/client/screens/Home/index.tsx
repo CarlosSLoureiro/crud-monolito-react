@@ -22,7 +22,7 @@ export default function HomeScreen() {
         </p>
         <p onClick={() => route.push(`/painel`)}>
           {Auth.user ? (
-            <>Clique aqui para acessar o painel. 🔑</>
+            <>Clique aqui para acessar o painel.</>
           ) : (
             <>Clique aqui para entrar ou se cadastrar no sistema. 🔑</>
           )}
