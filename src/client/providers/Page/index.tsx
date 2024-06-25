@@ -21,6 +21,7 @@ const PageProvider: FC<PageProviderProps> = (props: PageProviderProps) => {
   useEffect(() => {
     if (mustBeAuthenticated && !Auth.isAuthenticated) {
       showToast({
+        preventDuplicate: true,
         message: `Faça o login para continuar`,
         type: `warning`,
       });
