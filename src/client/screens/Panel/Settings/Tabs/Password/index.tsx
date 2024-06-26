@@ -4,15 +4,19 @@ import Grid from "@mui/material/Grid";
 
 import Input from "@client/components/Input";
 
-import { TabContent } from "./styles";
+import { usePasswordScreenTab } from "./hooks";
+import { TabContent } from "../../styles";
 
 export default function PasswordScreenTab() {
+  const { errors, handleChangePassword } = usePasswordScreenTab();
+
   return (
     <TabContent>
-      <Box component="form" onSubmit={() => console.log(`handle profile`)} sx={{ mt: 1 }}>
+      <Box component="form" onSubmit={handleChangePassword} sx={{ mt: 1 }}>
         <Grid container spacing={1}>
           <Grid xs={12}>
             <Input
+              _errors={errors?.currentPassword?._errors}
               fullWidth
               id="currentPassword"
               label="Sua senha Atual"
@@ -24,6 +28,7 @@ export default function PasswordScreenTab() {
           </Grid>
           <Grid xs={6}>
             <Input
+              _errors={errors?.newPassword?._errors}
               fullWidth
               id="newPassword"
               label="Nova senha"
@@ -35,6 +40,7 @@ export default function PasswordScreenTab() {
           </Grid>
           <Grid xs={6}>
             <Input
+              _errors={errors?.confirmNewPassword?._errors}
               fullWidth
               id="confirmNewPassword"
               label="Confirme a nova senha"

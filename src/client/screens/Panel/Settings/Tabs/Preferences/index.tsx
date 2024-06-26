@@ -6,7 +6,7 @@ import Switch from "@mui/material/Switch";
 
 import { useThemeContext } from "@client/contexts/Theme";
 
-import { TabContent } from "./styles";
+import { TabContent } from "../../styles";
 
 const PrefFormGroup = styled(FormGroup)<FormGroupProps>(({ theme }) => ({
   borderLeft: `2px solid ${theme.palette.divider}`,

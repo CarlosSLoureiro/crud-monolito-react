@@ -11,9 +11,9 @@ import Tab from "@mui/material/Tab";
 
 import Copyright from "@client/components/Copyright";
 
-import PasswordScreenTab from "./Password";
-import PreferencesTab from "./Preferences";
-import ProfileScreenTab from "./Profile";
+import PasswordScreenTab from "./Tabs/Password";
+import PreferencesTab from "./Tabs/Preferences";
+import ProfileScreenTab from "./Tabs/Profile";
 
 export function LabTabs() {
   const [value, setValue] = React.useState(`0`);
@@ -24,7 +24,7 @@ export function LabTabs() {
 
   const tabs = [
     { label: `Preferências`, children: <PreferencesTab /> },
-    { label: `Conta`, children: <ProfileScreenTab /> },
+    { label: `Perfil`, children: <ProfileScreenTab /> },
     { label: `Senha`, children: <PasswordScreenTab /> },
   ];
 
