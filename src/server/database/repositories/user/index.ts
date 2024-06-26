@@ -12,6 +12,11 @@ export abstract class UserRepository {
     return user;
   }
 
+  static async updatePassword(user: User, password: string) {
+    user.password = password;
+    return await userRepository.save(user);
+  }
+
   static async findByEmail(email: string) {
     const user = await userRepository.findOne({
       where: { email },
