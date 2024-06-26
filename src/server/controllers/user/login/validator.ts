@@ -1,9 +1,9 @@
 import { validate, z } from "@server/utils/validator";
 
-import { type LoginRequest } from "./types";
+import { type UserLoginRequest } from "./types";
 
 export const LoginValidator = async (request: Request) =>
-  validate<LoginRequest>(
+  validate<UserLoginRequest>(
     {
       email: z.string().email(),
       password: z.string(),

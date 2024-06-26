@@ -10,7 +10,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 
-import type { LogoutResponse } from "@server/controllers/logout/types";
+import type { UserLogoutResponse } from "@server/controllers/user/logout/types";
 
 import { useThemeContext } from "@client/contexts/Theme";
 import { useRequest } from "@client/hooks/useRequest";
@@ -26,8 +26,8 @@ export const LogoutButton = ({ isDrawerOpen }: ComponentProps) => {
   const { theme } = useThemeContext();
   const router = useRouter();
 
-  const { request } = useRequest<any, LogoutResponse>({
-    url: `/api/logout`,
+  const { request } = useRequest<any, UserLogoutResponse>({
+    url: `/api/user/logout`,
     options: {
       method: `POST`,
     },

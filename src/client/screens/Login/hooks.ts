@@ -3,7 +3,10 @@ import { toast } from "react-toastify";
 
 import { useRouter } from "next/navigation";
 
-import { type LoginRequest, type LoginResponse } from "@server/controllers/login/types";
+import {
+  type UserLoginRequest,
+  type UserLoginResponse,
+} from "@server/controllers/user/login/types";
 
 import { useThemeContext } from "@client/contexts/Theme";
 import { useRequest } from "@client/hooks/useRequest";
@@ -12,8 +15,8 @@ import { Auth } from "@client/utils/auth";
 export const useLoginScreen = () => {
   const { theme } = useThemeContext();
   const route = useRouter();
-  const { response, errors, request } = useRequest<LoginRequest, LoginResponse>({
-    url: `/api/login`,
+  const { response, errors, request } = useRequest<UserLoginRequest, UserLoginResponse>({
+    url: `/api/user/login`,
     options: {
       method: `POST`,
     },

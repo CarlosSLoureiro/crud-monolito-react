@@ -1,11 +1,11 @@
 import type { PublicUserData } from "@client/utils/auth/types";
 
-export type LoginRequest = {
+export type UserLoginRequest = {
   email: string;
   password: string;
 };
 
-export type LoginResponse = {
+export type UserLoginResponse = {
   accessToken: string;
   refreshToken: string;
   user: PublicUserData;

@@ -5,10 +5,10 @@ import { StatusCodes } from "http-status-codes";
 
 import { AuthService } from "@server/services/auth";
 
-import { type LoginRequest, type LoginResponse } from "./types";
+import { type UserLoginRequest, type UserLoginResponse } from "./types";
 
-export const LoginController = async (request: Request) => {
-  const params: LoginRequest = await request.json();
+export const UserLoginController = async (request: Request) => {
+  const params: UserLoginRequest = await request.json();
 
   const { accessToken, refreshToken, user } = await AuthService.login({
     email: params.email,
@@ -21,7 +21,7 @@ export const LoginController = async (request: Request) => {
     accessToken,
     refreshToken,
     user,
-  } satisfies LoginResponse;
+  } satisfies UserLoginResponse;
 
   return NextResponse.json(response, { status: StatusCodes.OK });
 };
