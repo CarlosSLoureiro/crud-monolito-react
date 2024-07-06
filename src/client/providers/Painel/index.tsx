@@ -3,6 +3,7 @@
 import { type ReactNode, useLayoutEffect, useState } from "react";
 
 import { useRouter } from "next/navigation";
+import { useWindowSize } from "usehooks-ts";
 
 import BarChartIcon from "@mui/icons-material/BarChart";
 import Brightness2Icon from "@mui/icons-material/Brightness2";
@@ -42,10 +43,17 @@ export default function PainelProvider({
   children: ReactNode;
 }>) {
   const router = useRouter();
+  const { width: windowWidth = 0 } = useWindowSize();
   const { theme, toggleTheme } = useThemeContext();
   const { showToast } = useGlobalContext();
 
   const [open, setOpen] = useState(false);
+
+  const closeDrawerIfSmallScreen = () => {
+    if (windowWidth <= 600) {
+      setOpen(false);
+    }
+  };
 
   const toggleDrawer = () => {
     const value = !open;
@@ -54,6 +62,7 @@ export default function PainelProvider({
   };
 
   const handlePageUnavailableClick = (label: string) => {
+    closeDrawerIfSmallScreen();
     showToast({ message: `A página de ${label} está em construção`, type: `warning` });
   };
 
@@ -156,14 +165,20 @@ export default function PainelProvider({
             icon={<HomeIcon />}
             isDrawerOpen={open}
             label="Página Inicial"
-            onClick={() => router.push(`/`)}
+            onClick={() => {
+              closeDrawerIfSmallScreen();
+              router.push(`/`);
+            }}
           />
           <Divider sx={{ my: 1 }} />
           <Button
             icon={<DashboardIcon />}
             isDrawerOpen={open}
             label="Dashboard"
-            onClick={() => router.push(`/painel`)}
+            onClick={() => {
+              closeDrawerIfSmallScreen();
+              router.push(`/painel`);
+            }}
           />
           <Button
             icon={<ShoppingCartIcon />}
@@ -193,7 +208,10 @@ export default function PainelProvider({
             icon={<SettingsIcon />}
             isDrawerOpen={open}
             label="Configurações"
-            onClick={() => router.push(`/painel/configuracoes`)}
+            onClick={() => {
+              closeDrawerIfSmallScreen();
+              router.push(`/painel/configuracoes`);
+            }}
           />
           <Divider sx={{ my: 1 }} />
           <LogoutButton isDrawerOpen={open} />
