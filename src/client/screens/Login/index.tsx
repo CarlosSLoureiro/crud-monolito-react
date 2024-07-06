@@ -60,12 +60,7 @@ export default function LoginScreen() {
           <Button fullWidth sx={{ mt: 3, mb: 2 }} type="submit" variant="contained">
             Entrar
           </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="/recuperar-senha" variant="body2">
-                Esqueceu a senha?
-              </Link>
-            </Grid>
+          <Grid container justifyContent="flex-end">
             <Grid item>
               <Link href="/cadastro" variant="body2">
                 {`Cadastre-se`}
