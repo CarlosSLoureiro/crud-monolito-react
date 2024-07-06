@@ -34,7 +34,7 @@ export default function HomeScreen() {
           <em>({Auth.user ? `autenticado` : `não autenticado`})</em> 🛠️
         </p>
         <p onClick={() => window.open(`https://www.linkedin.com/in/carlos-s-loureiro/`, `_blank`)}>
-          Me dê deu feedback no <b>LinkedIn</b> 😉
+          Me dê seu feedback no <b>LinkedIn</b> 😉
         </p>
         <div>
           <a
