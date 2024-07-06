@@ -34,29 +34,35 @@ export default function LoginScreen() {
           Entrar
         </Typography>
         <Box component="form" onSubmit={handleLogin} sx={{ mt: 1 }}>
-          <Input
-            _errors={errors?.email?._errors}
-            autoComplete="email"
-            autoFocus
-            fullWidth
-            id="email"
-            label="Endereço de Email"
-            margin="normal"
-            name="email"
-            required
-            type="email"
-          />
-          <Input
-            _errors={errors?.password?._errors}
-            autoComplete="password"
-            fullWidth
-            id="password"
-            label="Senha"
-            margin="normal"
-            name="password"
-            required
-            type="password"
-          />
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Input
+                _errors={errors?.email?._errors}
+                autoComplete="email"
+                autoFocus
+                fullWidth
+                id="email"
+                label="Endereço de Email"
+                margin="normal"
+                name="email"
+                required
+                type="email"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Input
+                _errors={errors?.password?._errors}
+                autoComplete="password"
+                fullWidth
+                id="password"
+                label="Senha"
+                margin="normal"
+                name="password"
+                required
+                type="password"
+              />
+            </Grid>
+          </Grid>
           <Button fullWidth sx={{ mt: 3, mb: 2 }} type="submit" variant="contained">
             Entrar
           </Button>
