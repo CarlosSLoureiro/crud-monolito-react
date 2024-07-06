@@ -31,10 +31,12 @@ describe(`UserService`, () => {
       invalidEmails.forEach(email =>
         it(`when email is: ${email}`, async () => {
           // Arrange
+          const password = faker.internet.password();
           const params: UserServiceCreateParams = {
             name: faker.person.fullName(),
             email,
-            password: faker.internet.password(),
+            password,
+            confirmPassword: password,
           };
 
           try {
@@ -50,12 +52,38 @@ describe(`UserService`, () => {
       );
     });
 
+    it(`should throw an error if email is already registered`, async () => {
+      // Arrange
+      const user = new UserFactory();
+      const password = faker.internet.password();
+      const params: UserServiceCreateParams = {
+        name: faker.person.fullName(),
+        email: user.email,
+        password: password,
+        confirmPassword: password,
+      };
+
+      // Mock
+      UserRepositoryMock.findByEmail.mockResolvedValue(user);
+
+      try {
+        // Act
+        await UserService.create(params);
+        fail(`should throw an error if email is already registered`);
+      } catch (error) {
+        // Assert
+        expect(error).toBeInstanceOf(ValidationError);
+        expect(error).toHaveProperty(`message`, `Email já cadastrado`);
+      }
+    });
+
     it(`should throw an error if password have length < 8`, async () => {
       // Arrange
       const params: UserServiceCreateParams = {
         name: faker.person.fullName(),
         email: faker.internet.email(),
         password: `1234567`,
+        confirmPassword: `1234567`,
       };
 
       try {
@@ -75,6 +103,7 @@ describe(`UserService`, () => {
         name: faker.person.fullName(),
         email: faker.internet.email(),
         password: `12345678`,
+        confirmPassword: `12345678`,
       };
 
       try {
@@ -94,6 +123,7 @@ describe(`UserService`, () => {
         name: faker.person.fullName(),
         email: faker.internet.email(),
         password: `abcdefgh`,
+        confirmPassword: `abcdefgh`,
       };
 
       try {
@@ -107,26 +137,23 @@ describe(`UserService`, () => {
       }
     });
 
-    it(`should throw an error if email is already registered`, async () => {
+    it(`should throw an error if password is different from confirm password`, async () => {
       // Arrange
-      const user = new UserFactory();
       const params: UserServiceCreateParams = {
         name: faker.person.fullName(),
-        email: user.email,
-        password: faker.internet.password(),
+        email: faker.internet.email(),
+        password: `C4RLOS-LOUR3IR0`,
+        confirmPassword: `C4RLOS_LOUR3IR0`,
       };
-
-      // Mock
-      UserRepositoryMock.findByEmail.mockResolvedValue(user);
 
       try {
         // Act
         await UserService.create(params);
-        fail(`should throw an error if email is already registered`);
+        fail(`should throw an error if password is different from confirm password`);
       } catch (error) {
         // Assert
         expect(error).toBeInstanceOf(ValidationError);
-        expect(error).toHaveProperty(`message`, `Email já cadastrado`);
+        expect(error).toHaveProperty(`message`, `As senhas não coincidem`);
       }
     });
 
@@ -136,6 +163,7 @@ describe(`UserService`, () => {
         name: faker.person.fullName(),
         email: faker.internet.email(),
         password: `C4RLOS-LOUR3IR0`,
+        confirmPassword: `C4RLOS-LOUR3IR0`,
       };
 
       // Mock

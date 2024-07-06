@@ -24,9 +24,13 @@ export abstract class UserService {
     }
   }
 
-  static async create({ name, email, password }: UserServiceCreateParams) {
+  static async create({ name, email, password, confirmPassword }: UserServiceCreateParams) {
     this.validateEmail(email);
     this.validatePassword(password);
+
+    if (password !== confirmPassword) {
+      throw new ValidationError(`confirmPassword`, `As senhas não coincidem`);
+    }
 
     const user = await UserRepository.findByEmail(email);
 
