@@ -30,4 +30,9 @@ export abstract class UserRepository {
     */
     return user;
   }
+
+  static async create(data: Partial<User>) {
+    const user = userRepository.create(data);
+    return await userRepository.save(user);
+  }
 }

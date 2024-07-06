@@ -6,6 +6,7 @@ export const UserRepositoryMock: jest.Mocked<Omit<typeof UserRepository, `protot
   findByEmail: jest.fn().mockResolvedValue(new UserFactory()),
   findById: jest.fn().mockResolvedValue(new UserFactory()),
   updatePassword: jest.fn().mockResolvedValue(new UserFactory()),
+  create: jest.fn().mockResolvedValue(new UserFactory()),
 };
 
 jest.mock(`.`, () => {
