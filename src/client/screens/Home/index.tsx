@@ -20,13 +20,13 @@ export default function HomeScreen() {
             <>Olá! Você não está logado.</>
           )}
         </p>
-        <p onClick={() => route.push(`/painel`)}>
-          {Auth.user ? (
-            <>Clique aqui para acessar o painel.</>
-          ) : (
-            <>Clique aqui para entrar ou se cadastrar no sistema. 🔑</>
-          )}
-        </p>
+        {Auth.user ? (
+          <p onClick={() => route.push(`/painel`)}>Clique aqui para acessar o painel.</p>
+        ) : (
+          <p onClick={() => route.push(`/login`)}>
+            Clique aqui para entrar ou se cadastrar no sistema. 🔑
+          </p>
+        )}
         <p
           onClick={() => route.push(Auth.user ? `/status-autenticado` : `/status-nao-autenticado`)}
         >
