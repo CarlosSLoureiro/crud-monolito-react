@@ -31,7 +31,11 @@ describe(`UserService`, () => {
       invalidEmails.forEach(email =>
         it(`when email is: ${email}`, async () => {
           // Arrange
-          const password = faker.internet.password();
+          const password = faker.internet.password({
+            length: 8,
+            pattern: /[A-Za-z]/,
+            prefix: `00`,
+          });
           const params: UserServiceCreateParams = {
             name: faker.person.fullName(),
             email,
@@ -55,7 +59,11 @@ describe(`UserService`, () => {
     it(`should throw an error if email is already registered`, async () => {
       // Arrange
       const user = new UserFactory();
-      const password = faker.internet.password();
+      const password = faker.internet.password({
+        length: 8,
+        pattern: /[A-Za-z]/,
+        prefix: `00`,
+      });
       const params: UserServiceCreateParams = {
         name: faker.person.fullName(),
         email: user.email,
@@ -187,7 +195,11 @@ describe(`UserService`, () => {
       // Arrange
       const params: UserServiceChangePasswordParams = {
         id: faker.number.int(),
-        currentPassword: faker.internet.password(),
+        currentPassword: faker.internet.password({
+          length: 8,
+          pattern: /[A-Za-z]/,
+          prefix: `00`,
+        }),
         newPassword: `1234567`,
         confirmNewPassword: `1234567`,
       };
@@ -207,7 +219,11 @@ describe(`UserService`, () => {
       // Arrange
       const params: UserServiceChangePasswordParams = {
         id: faker.number.int(),
-        currentPassword: faker.internet.password(),
+        currentPassword: faker.internet.password({
+          length: 8,
+          pattern: /[A-Za-z]/,
+          prefix: `00`,
+        }),
         newPassword: `12345678`,
         confirmNewPassword: `12345678`,
       };
@@ -227,7 +243,11 @@ describe(`UserService`, () => {
       // Arrange
       const params: UserServiceChangePasswordParams = {
         id: faker.number.int(),
-        currentPassword: faker.internet.password(),
+        currentPassword: faker.internet.password({
+          length: 8,
+          pattern: /[A-Za-z]/,
+          prefix: `00`,
+        }),
         newPassword: `abcdefgh`,
         confirmNewPassword: `abcdefgh`,
       };
@@ -247,7 +267,11 @@ describe(`UserService`, () => {
       // Arrange
       const params: UserServiceChangePasswordParams = {
         id: faker.number.int(),
-        currentPassword: faker.internet.password(),
+        currentPassword: faker.internet.password({
+          length: 8,
+          pattern: /[A-Za-z]/,
+          prefix: `00`,
+        }),
         newPassword: `C4RLOS-LOUR3IR0`,
         confirmNewPassword: `C4RLOS_LOUR3IR0`,
       };
@@ -267,7 +291,11 @@ describe(`UserService`, () => {
       // Arrange
       const params: UserServiceChangePasswordParams = {
         id: faker.number.int(),
-        currentPassword: faker.internet.password(),
+        currentPassword: faker.internet.password({
+          length: 8,
+          pattern: /[A-Za-z]/,
+          prefix: `00`,
+        }),
         newPassword: `C4RLOS-LOUR3IR0`,
         confirmNewPassword: `C4RLOS-LOUR3IR0`,
       };

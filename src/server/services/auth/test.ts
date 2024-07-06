@@ -22,7 +22,11 @@ describe(`AuthService`, () => {
       // Arrange
       const params: AuthServiceLoginParams = {
         email: faker.internet.email(),
-        password: faker.internet.password(),
+        password: faker.internet.password({
+          length: 8,
+          pattern: /[A-Za-z]/,
+          prefix: `00`,
+        }),
         userAgent: faker.internet.userAgent(),
         ip: faker.internet.ip(),
       };
