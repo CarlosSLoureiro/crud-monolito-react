@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 
-import { useRouter } from "next/navigation";
-
 import {
   type ChangeUserPasswordRequest,
   type ChangeUserPasswordResponse,
@@ -14,7 +12,6 @@ import { Auth } from "@client/utils/auth";
 
 export const usePasswordScreenTab = () => {
   const { theme } = useThemeContext();
-  const route = useRouter();
   const { response, errors, request } = useRequest<
     ChangeUserPasswordRequest,
     ChangeUserPasswordResponse
