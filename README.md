@@ -1,34 +1,31 @@
 # CRUD monólito com React
 
 ## 👨🏻‍💻 Motivação
-Aplicações construídas de forma monolítica estão com estereótipo de aplicações ruins por parte da comunidade. E de fato, em um cenário onde a agilidade e a escalabilidade são frequentemente destacadas, os monólitos muitas vezes são vistos como uma relíquia do passado. No entanto, gostaria de propor uma reflexão sobre a importância dos monólitos, especialmente quando lidamos com equipes de desenvolvedores enxutas (que acredito ser a realidade de muitas iniciativas).
+Aplicações monolíticas têm um estereótipo negativo na comunidade. E de fato, em um cenário onde a agilidade e a escalabilidade são frequentemente destacadas, os monólitos muitas vezes são vistos como uma relíquia do passado. No entanto, gostaria de abordar uma reflexão sobre a importância dos monólitos, especialmente quando lidamos com equipes de desenvolvedores enxutas (que acredito ser a realidade de muitas iniciativas).
 
-Em projetos pequenos, onde a equipe de desenvolvedores é limitada, os monólitos podem ser um aliado poderoso. Eles oferecem uma abordagem simples e direta para a construção de aplicações, permitindo que equipes pequenas se concentrem na entrega de valor sem sobrecarga de complexidade arquitetural.
+Em projetos pequenos, os monólitos podem ser aliados poderosos. Eles oferecem uma abordagem simples e direta, permitindo que equipes pequenas se concentrem na entrega de valor sem complexidade arquitetural excessiva.
 
-Aqui estão algumas razões pelas quais os monólitos merecem nossa atenção e consideração:
+Aqui estão algumas razões para considerar os monólitos:
 
-1. **Simplicidade:** Com apenas uma base de código para gerenciar, os monólitos simplificam o desenvolvimento, teste e implantação. Isso reduz a sobrecarga de comunicação e coordenação em equipes pequenas.
+1. **Simplicidade:** Com uma base de código única, os monólitos simplificam o desenvolvimento, teste e implantação, reduzindo a necessidade de comunicação e coordenação.
 
-2. **Facilidade de entendimento:** Em uma equipe pequena, onde todos precisam entender todas as partes do sistema, um monólito oferece uma visão completa e coesa do aplicativo, facilitando a colaboração e o desenvolvimento conjunto.
+2. **Facilidade de entendimento:** Em equipes pequenas, onde todos precisam entender o sistema como um todo, um monólito oferece uma visão coesa do aplicativo, facilitando a colaboração.
 
-3. **Custos reduzidos:** A manutenção de um monólito geralmente é mais barata do que a de uma arquitetura distribuída, especialmente quando consideramos equipes pequenas com recursos limitados.
+3. **Custos reduzidos:** A manutenção de um monólito é geralmente mais barata do que uma arquitetura distribuída, especialmente para equipes com recursos limitados.
 
-4. **Rápida iteração:** Com todas as partes do sistema em um único código-base, as mudanças podem ser implementadas e testadas rapidamente, acelerando o ciclo de desenvolvimento.
+4. **Rápida iteração:** Com todas as partes do sistema em um único código-base, mudanças podem ser implementadas e testadas rapidamente, acelerando o desenvolvimento.
 
-5. **Foco na entrega de valor:** Ao invés de se preocupar com a complexidade da arquitetura, equipes pequenas podem se concentrar no que realmente importa: entregar um produto de qualidade que funcione e atenda às necessidades dos clientes.
+5. **Foco na entrega de valor:**  Equipes pequenas podem se concentrar em entregar um produto de qualidade e que atenda às necessidades dos clientes, sem se preocupar com a complexidade arquitetural.
 
-É importante ressaltar que os monólitos não são a solução ideal para todos os cenários. Projetos maiores ou que exigem escalabilidade extrema podem se beneficiar de arquiteturas mais distribuídas. No entanto, em projetos pequenos, onde os recursos são limitados e a simplicidade e agilidade são essenciais, os monólitos podem ser uma escolha sábia. Portanto, antes de descartar os monólitos como obsoletos, convido você a considerar seu valor em projetos pequenos. Eles podem ser a chave para o sucesso de sua equipe e de seu projeto.
+É claro que monólitos não são a solução ideal para todos os cenários. Projetos maiores ou que exigem alta escalabilidade podem se beneficiar de arquiteturas distribuídas. No entanto, em projetos pequenos, onde a simplicidade e agilidade são essenciais, os monólitos podem ser uma escolha sábia. Portanto, antes de descartá-los, considere seu valor para projetos pequenos.
 
-Portanto, com base nesse pensamento, desenvolvi essa aplicação em [React](https://react.dev) com [NextJS](https://nextjs.org) para que qualquer pessoa possa usá-la como base de seus projetos.
+Baseado nisso, desenvolvi essa aplicação em [React](https://react.dev) com [NextJS](https://nextjs.org) que pode ser usada como base para outros projetos.
 
 ### Qual a diferença?
-Se você já utilizou [Laravel](https://laravel.com), [Zend](https://framework.zend.com) ou algum outro framework em [PHP](https://www.php.net) para construir aplicações monolíticas, você já deve ter tido dores de cabeça para construir lógicas no front-end.
 
-Geralmente, construir front-end em aplicações monolíticas é sinônimo de dor de cabeça. Até poderíamos usar [React](https://react.dev), [Vue](https://vuejs.org) ou algum outro framework para contornar isso, porém o projeto acaba ficando com cara de *Frankenstein* 🧟‍♂️ mesmo usando frameworks também em *JavaScript* como o [AdonisJS](https://adonisjs.com).
+Se você já usou frameworks [PHP](https://www.php.net) como [Laravel](https://laravel.com) ou [Zend](https://framework.zend.com), deve ter enfrentado desafios ao construir lógicas no front-end. Construir front-end em monólitos é muitas vezes sinônimo de dor de cabeça. Embora possamos usar frameworks como [React](https://react.dev) ou [Vue](https://vuejs.org), o projeto pode acabar parecendo um Frankenstein 🧟‍♂, mesmo com frameworks em JavaScript como [AdonisJS](https://adonisjs.com).
 
-O diferencial deste projeto é que, além do código inteiro do projeto ser apenas em [TypeScript](https://www.typescriptlang.org), estamos criando rotas dinâmicas para segregar o que é back-end e front-end na aplicação. Além de todos os outros recursos que o [React](https://react.dev) e [NextJS](https://nextjs.org) nos oferece. Além disso, estamos fazendo uma forte tipagem para garantir as assinaturas das requisições a fim de evitar inconsistências entre o back-end e o front-end.
-
-Também criei uma lógica para lidar com as rotas dinâmicas, tentei deixar de uma forma bem prática e fácil de usar, inspirado no [ExpressJS](https://expressjs.com) para tratar as requisições.
+O diferencial deste projeto é que todo o código é em [TypeScript](https://www.typescriptlang.org), criando rotas dinâmicas para segregar back-end e front-end, aproveitando todos os recursos do [React](https://react.dev) e [NextJS](https://nextjs.org). Além disso, usamos tipagem forte para garantir consistência entre back-end e front-end. E também criei uma lógica simples para lidar com as rotas dinâmicas, inspirada no [ExpressJS](https://expressjs.com).
 
 ## 🎥 Prévia
 https://github.com/CarlosSLoureiro/crud-monolito-react/assets/19580424/459bec57-38df-47fb-8d09-82b58682051b
@@ -86,4 +83,4 @@ https://github.com/CarlosSLoureiro/crud-monolito-react/assets/19580424/b8cf142b-
 
 ## ✔️ Conclusão
 
-Como mencionei anteriormente, esse projeto visa ajudar pequenas equipes de desenvolvedores que optarem pelo uso de um monólito simples e bem estruturado. Espero que seja útil para alguém de alguma forma. E, caso queira contribuir, doar ou dar algum feedback, por favor, estou à disposição em meu **LinkedIn**: https://www.linkedin.com/in/carlos-s-loureiro/ 😉
+Esse projeto visa ajudar pequenas equipes de desenvolvedores que optarem pelo uso de um monólito simples e bem estruturado para suas aplicações. Espero que seja útil para alguém de alguma forma. E, caso queira contribuir, doar ou dar algum feedback por esse trabalho, estarei à disposição em meu **LinkedIn**: https://www.linkedin.com/in/carlos-s-loureiro/ 😉
